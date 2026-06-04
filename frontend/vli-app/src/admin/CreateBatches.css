@@ -1,0 +1,132 @@
+/* Main Content */
+.dashboard-content {
+  flex: 1;
+  padding: 20px;
+  background: #f5f7fa;
+  min-height: 100vh;
+}
+
+.dashboard-content h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #1e293b;
+}
+
+.dashboard-content p {
+  margin-bottom: 20px;
+  color: #64748b;
+}
+
+/* Form Container */
+.batch-form {
+  max-width: 700px;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Labels */
+.form-group label {
+  font-weight: 600;
+  color: #334155;
+  margin-top: 8px;
+}
+
+/* Inputs */
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
+}
+
+/* Submit Button */
+.batch-form button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.batch-form button:hover {
+  background: #1d4ed8;
+}
+
+/* Tablet View */
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 15px;
+  }
+
+  .dashboard-content h2 {
+    font-size: 24px;
+  }
+
+  .batch-form {
+    padding: 20px;
+  }
+
+  .form-group input {
+    font-size: 14px;
+  }
+}
+
+/* Mobile View */
+@media (max-width: 480px) {
+  .dashboard-content {
+    padding: 10px;
+  }
+
+  .dashboard-content h2 {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .dashboard-content p {
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .batch-form {
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .form-group label {
+    font-size: 14px;
+  }
+
+  .form-group input {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .batch-form button {
+    padding: 12px;
+    font-size: 15px;
+  }
+}
