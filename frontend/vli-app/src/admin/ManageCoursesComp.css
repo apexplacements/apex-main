@@ -1,0 +1,178 @@
+/* Main Content */
+.course-content {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Search Box */
+.course-content > input[type="text"] {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+/* Course Form */
+.course-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.course-form input,
+.course-form select,
+.course-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dbeafe;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.course-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.course-form button {
+  padding: 12px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.course-form button:hover {
+  background: #1d4ed8;
+}
+
+/* Full Width Elements */
+.course-form textarea,
+.course-form button {
+  grid-column: span 3;
+}
+
+/* Table */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 10px;
+}
+
+.table-container table {
+  width: 100%;
+  min-width: 800px;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.table-container th {
+  background: #2563eb;
+  color: #fff;
+  padding: 12px;
+}
+
+.table-container td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  min-width: 40px;
+  height: 40px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Laptop */
+@media (max-width: 1024px) {
+  .course-form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .course-form textarea,
+  .course-form button {
+    grid-column: span 2;
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .course-content {
+    padding: 15px;
+  }
+
+  .course-form {
+    grid-template-columns: 1fr;
+  }
+
+  .course-form textarea,
+  .course-form button {
+    grid-column: span 1;
+  }
+
+  .course-form input,
+  .course-form select,
+  .course-form textarea,
+  .course-form button {
+    width: 100%;
+  }
+
+  .table-container table {
+    min-width: 700px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .course-content {
+    padding: 10px;
+  }
+
+  .course-form {
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .course-form input,
+  .course-form select,
+  .course-form textarea,
+  .course-form button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .pagination button {
+    width: 35px;
+    height: 35px;
+    font-size: 12px;
+  }
+
+  .table-container table {
+    min-width: 600px;
+  }
+}

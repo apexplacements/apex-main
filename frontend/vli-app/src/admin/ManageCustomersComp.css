@@ -1,0 +1,159 @@
+/* User Enquiries Section */
+.dashboard-content {
+  padding: 20px;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.dashboard-content h2 {
+  margin-bottom: 20px;
+  color: #1e293b;
+}
+
+/* Filters */
+.report-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.report-filters input {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  min-width: 160px;
+}
+
+.report-filters button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.report-filters button:hover {
+  background: #1d4ed8;
+}
+
+/* Table Wrapper */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Table */
+.dashboard-content table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-content th {
+  background: #0f172a;
+  color: white;
+  padding: 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.dashboard-content td {
+  padding: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.dashboard-content tr:hover {
+  background: #f8fafc;
+}
+
+/* Input Fields */
+.dashboard-content td input {
+  width: 100%;
+  min-width: 120px;
+  padding: 6px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+}
+
+/* Action Buttons */
+.dashboard-content td button {
+  margin: 2px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dashboard-content td button:first-child {
+  background: #16a34a;
+  color: white;
+}
+
+.dashboard-content td button:last-child {
+  background: #dc2626;
+  color: white;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 10px;
+  }
+
+  .report-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .report-filters input,
+  .report-filters button {
+    width: 100%;
+  }
+
+  .dashboard-content table {
+    font-size: 13px;
+  }
+
+  .dashboard-content th,
+  .dashboard-content td {
+    padding: 8px;
+  }
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.pagination-container button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.pagination-container button:hover {
+  background: #1d4ed8;
+}
+
+.pagination-container button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.pagination-container span {
+  font-weight: 600;
+}
