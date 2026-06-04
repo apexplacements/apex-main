@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LogInComp from "./admin/LogInComp";
-import HomeComp from "./admin/HomeComp";
 import RegisterComp from "./admin/RegisterComp";
 import ForgotPasswordComp from "./admin/ForgotPasswordComp";
 import PasswordResetComp from "./admin/PasswordResetComp";
@@ -23,14 +22,16 @@ import AuditLogsComp from "./admin/AuditLogsComp";
 import NotificationsComp from "./admin/NotificationsComp";
 import EmailCreationComp from "./admin/EmailCreationComp";
 import IdentityManagementComp from "./admin/IdentityManagementComp";
+import HomeComp from "./home/HomeComp";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LogInComp />} />
-        <Route path="/login" element={<LogInComp />} />
+        <Route path="/" element={<HomeComp />} />
         <Route path="/home" element={<HomeComp />} />
+        <Route path="/login" element={<LogInComp />} />
+        
         <Route path="/register" element={<RegisterComp />} />
         <Route path="/forgot-password" element={<ForgotPasswordComp />} />
         <Route path="/password-reset" element={<PasswordResetComp />} />
