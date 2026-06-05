@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 const LogInComp = lazy(() => import("./admin/LogInComp"));
 const RegisterComp = lazy(() => import("./admin/RegisterComp"));
 const ForgotPasswordComp = lazy(() => import("./admin/ForgotPasswordComp"));
@@ -35,7 +35,7 @@ const NewbatchComp = lazy(() => import("./home/NewbatchComp"));
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<HomeComp />} />
@@ -98,7 +98,7 @@ function App() {
         <Route path="/blogs" element={<BlogsComp />} />
       </Routes>
       </Suspense>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
