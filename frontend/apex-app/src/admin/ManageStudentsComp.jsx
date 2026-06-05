@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import apiClient from "../apiClient";
 import "./DashboardComp.css";
 import "./CreateBatches.css";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ const ManageStudentsComp = () => {
 
   const fetchEnquiries = async () => {
     try {
-      const response = await axios.get("/api/userrequests");
+      const response = await apiClient.get("/api/userrequests");
 
       setEnquiries(response.data.data);
     } catch (error) {
@@ -43,7 +43,7 @@ const [selectedMonth, setSelectedMonth] = useState("");
 const deleteEnquiry = async (id) => {
   if (!window.confirm("Delete this record?")) return;
 
-  await axios.delete(`/api/userrequests/${id}`);
+  await apiClient.delete(`/api/userrequests/${id}`);
 
   fetchEnquiries();
 };
@@ -62,7 +62,7 @@ const editEnquiry = (item) => {
 
 {/*Update user request in RDS and send updated data to frontend*/}
 const updateEnquiry = async () => {
-  await axios.put(
+  await apiClient.put(
     `/api/userrequests/${editingId}`,
     editForm
   );
@@ -104,7 +104,7 @@ const exportExcel = (data, fileName) => {
 
 {/*Datewise filter or download*/}
 const downloadByDate = async () => {
-  const res = await axios.get(
+  const res = await apiClient.get(
     `/api/userrequests/date/${selectedDate}`
   );
 
@@ -116,7 +116,7 @@ const downloadByDate = async () => {
 
 {/*Monthwise filter or download*/}
 const downloadByMonth = async () => {
-  const res = await axios.get(
+  const res = await apiClient.get(
     `/api/userrequests/month/${selectedMonth}`
   );
 

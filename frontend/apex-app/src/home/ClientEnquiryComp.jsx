@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
+import apiClient from "../apiClient";
 import './ClientEnquiryComp.css';
 import { useNavigate } from "react-router-dom";
-
-const baseUrl = import.meta.env.VITE_API_URL?.trim() || "http://localhost:5000";
 
 function ClientEnquiry() {
   const navigate = useNavigate();
@@ -38,8 +36,8 @@ function ClientEnquiry() {
     setMessage("");
 
     try {
-      const response = await axios.post(
-        `${baseUrl}/api/customer-requests`,
+      const response = await apiClient.post(
+        "/api/customer-requests",
         formData
       );
       

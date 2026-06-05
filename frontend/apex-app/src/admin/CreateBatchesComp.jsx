@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import apiClient from "../apiClient";
 import "./DashboardComp.css";
 import "./CreateBatches.css";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -19,7 +19,7 @@ const [batches, setBatches] = useState([]);
 
 const fetchBatches = async () => {
   try {
-    const res = await axios.get('/api/batches');
+    const res = await apiClient.get('/api/batches');
     if (res.data && res.data.data) setBatches(res.data.data);
   } catch (err) {
     console.error('Failed to fetch batches', err);
@@ -42,7 +42,7 @@ const createBatch = async (e) => {
   e.preventDefault();
 
   try {
-    await axios.post("/api/batches", formData);
+    await apiClient.post("/api/batches", formData);
 
     alert("Batch Created Successfully");
 

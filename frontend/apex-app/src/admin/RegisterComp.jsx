@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./RegisterComp.css";
-import axios from "axios";
+import apiClient from "../apiClient";
 
 
 const RegisterComp = () => {
@@ -40,7 +40,7 @@ const RegisterComp = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post(
+      const response = await apiClient.post(
         "/api/register",
         {
           name: formData.name,

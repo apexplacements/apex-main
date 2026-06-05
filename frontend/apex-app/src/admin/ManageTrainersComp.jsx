@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./DashboardComp.css";
 import "./ManageTrainersComp.css";
 import { NavLink, useNavigate } from "react-router-dom";
-import axios from "axios";
+import apiClient from "../apiClient";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import jsPDF from "jspdf";
@@ -37,7 +37,7 @@ const ManageTrainersComp = () => {
 
   const fetchTrainers = async () => {
     try {
-      const res = await axios.get("/api/trainers");
+      const res = await apiClient.get("/api/trainers");
       if (res.data && res.data.data) setTrainers(res.data.data);
     } catch (err) {
       console.error("Failed to load trainers", err);
@@ -53,7 +53,7 @@ const addTrainer = async (e) => {
   e.preventDefault();
 
   try {
-    await axios.post("/api/trainers", trainerForm);
+    await apiClient.post("/api/trainers", trainerForm);
     setTrainerForm({
       trainer_name: "",
       mobile: "",
@@ -71,7 +71,7 @@ const addTrainer = async (e) => {
 
 const updateTrainer = async () => {
   try {
-    await axios.put(`/api/trainers/${editingId}`, trainerForm);
+    await apiClient.put(`/api/trainers/${editingId}`, trainerForm);
     setEditingId(null);
     setTrainerForm({
       trainer_name: "",
@@ -113,7 +113,7 @@ const editTrainer = (trainer) => {
 const deleteTrainer = async (id) => {
   if (typeof window !== "undefined" && window.confirm("Delete this trainer?")) {
     try {
-      await axios.delete(`/api/trainers/${id}`);
+      await apiClient.delete(`/api/trainers/${id}`);
       fetchTrainers();
     } catch (err) {
       console.error("Failed to delete trainer", err);

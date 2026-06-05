@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import apiClient from "../apiClient";
 import "./DashboardComp.css";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -25,7 +25,7 @@ const ManageCoursesComp = () => {
   // Fetch courses from backend
   const fetchCourses = async () => {
     try {
-      const response = await axios.get("/api/courses");
+      const response = await apiClient.get("/api/courses");
       setCourses(response.data.data);
     } catch (error) {
       console.error("Error fetching courses:", error);
@@ -41,8 +41,7 @@ const ManageCoursesComp = () => {
     e.preventDefault();
 
     try {
-      await axios.post("/api/courses", courseForm);
-
+      await apiClient.post("/api/courses", courseForm);
       fetchCourses();
 
       setCourseForm({

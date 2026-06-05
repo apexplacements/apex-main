@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import apiClient from "../apiClient";
 import "./DashboardComp.css";
 import "./UploadDataComp.css";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -23,7 +23,7 @@ const UploadDataComp = () => {
     formData.append("file", file);
 
     try {
-      await axios.post(
+      await apiClient.post(
         "/api/upload-resource",
         formData
       );
@@ -42,7 +42,7 @@ const UploadDataComp = () => {
 
   const fetchResources = async () => {
     try {
-      const res = await axios.get("/api/upload-resource");
+      const res = await apiClient.get("/api/upload-resource");
       if (res.data && res.data.data) {
         setResources(res.data.data);
       }

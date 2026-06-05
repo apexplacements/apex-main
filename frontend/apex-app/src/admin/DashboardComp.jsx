@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./DashboardComp.css";
 import { NavLink, useNavigate } from "react-router-dom";
 

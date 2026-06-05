@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
+import apiClient from "../apiClient";
 import "./CandidateEnquiryComp.css";
-
-const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function CandidateEnquiryComp() {
 
@@ -40,8 +38,8 @@ function CandidateEnquiryComp() {
 
     try {
 
-      const response = await axios.post(
-        `${baseUrl}/api/userrequests`,
+      const response = await apiClient.post(
+        "/api/userrequests",
         formData
       );
 

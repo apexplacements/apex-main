@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import apiClient from "../apiClient";
 import "./DashboardComp.css";
 import "./EmailCreationComp.css";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -30,7 +30,7 @@ const EmailCreationComp = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("/api/email-creation/users");
+      const res = await apiClient.get("/api/email-creation/users");
       if (res.data && res.data.data) {
         setUsers(res.data.data);
       }
@@ -41,7 +41,7 @@ const EmailCreationComp = () => {
 
   const fetchGeneratedEmails = async () => {
     try {
-      const res = await axios.get("/api/email-creation");
+      const res = await apiClient.get("/api/email-creation");
       if (res.data && res.data.data) {
         setGeneratedEmails(res.data.data);
       }
@@ -82,7 +82,7 @@ const EmailCreationComp = () => {
     }
 
     try {
-      const res = await axios.post("/api/email-creation", {
+      const res = await apiClient.post("/api/email-creation", {
         userId: selectedUserId,
         roles: selectedRoles,
       });
@@ -99,7 +99,7 @@ const EmailCreationComp = () => {
 
   const deleteEntry = async (id) => {
     try {
-      const res = await axios.delete(`/api/email-creation/${id}`);
+      const res = await apiClient.delete(`/api/email-creation/${id}`);
       if (res.data && res.data.success) {
         setGeneratedEmails((prev) => prev.filter((item) => item.id !== id));
         setStatusMessage("Deleted generated email entry successfully.");

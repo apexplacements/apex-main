@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import apiClient from "../apiClient";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./LogInComp.css";
 
@@ -64,7 +64,7 @@ const PasswordResetComp = () => {
 
     setLoading(true);
     try {
-      const res = await axios.post("/api/login/reset-password", {
+      const res = await apiClient.post("/api/login/reset-password", {
         id: userData.id,
         newPassword: formData.newPassword,
       });

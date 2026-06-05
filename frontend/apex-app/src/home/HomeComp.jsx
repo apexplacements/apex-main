@@ -9,7 +9,7 @@ import ContactHomeComp from './ContactHomeComp';
 import WhatsappchatComp from './WhatsappchatComp';
 import './SocialMediaComp.css';
 import './HomeComp.css';
-import axios from "axios";
+import apiClient from "../apiClient";
 
 const HomeComp = () => {
     const navigate = useNavigate()
@@ -23,7 +23,7 @@ useEffect(() => {
 
 const loadBatches = async () => {
   try {
-    const res = await axios.get("/api/batches");
+    const res = await apiClient.get("/api/batches");
     setBatches(res.data?.data ?? []);
   } catch (error) {
     console.error("Failed to load batches:", error);

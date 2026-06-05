@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import apiClient from "../apiClient";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import "./IdentityManagementComp.css";
@@ -47,7 +47,7 @@ const IdentityManagementComp = () => {
 
   const fetchGeneratedEmails = async () => {
     try {
-      const res = await axios.get("/api/email-creation");
+      const res = await apiClient.get("/api/email-creation");
       if (res.data?.success) {
         setGeneratedEmails(res.data.data);
       } else {
@@ -131,7 +131,7 @@ const IdentityManagementComp = () => {
         payload.append("photo", photoFile);
       }
 
-      const res = await axios.post("/api/identity-management", payload, {
+      const res = await apiClient.post("/api/identity-management", payload, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

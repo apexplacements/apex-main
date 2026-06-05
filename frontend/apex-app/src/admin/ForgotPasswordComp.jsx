@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import apiClient from "../apiClient";
 import "./ForgotPasswordComp.css";
 
 const ForgotPasswordComp = () => {
@@ -34,7 +34,7 @@ const ForgotPasswordComp = () => {
 
     setLoading(true);
     try {
-      const res = await axios.post("/api/login/forgot-password", {
+      const res = await apiClient.post("/api/login/forgot-password", {
         email: form.email,
         newPassword: form.password,
       });
