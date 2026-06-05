@@ -22,9 +22,13 @@ useEffect(() => {
 }, []);
 
 const loadBatches = async () => {
-  const res = await axios.get("/api/batches");
-
-  setBatches(res.data.data);
+  try {
+    const res = await axios.get("/api/batches");
+    setBatches(res.data?.data ?? []);
+  } catch (error) {
+    console.error("Failed to load batches:", error);
+    setBatches([]);
+  }
 };
 
 
@@ -56,7 +60,7 @@ const loadBatches = async () => {
       </thead>
 
       <tbody>
-        {batches.map((batch) => (
+        {(Array.isArray(batches) ? batches : []).map((batch) => (
           <tr key={batch.id}>
             <td>{batch.id}</td>
             <td>{batch.course_name}</td>
