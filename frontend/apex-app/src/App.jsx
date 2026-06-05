@@ -23,6 +23,14 @@ import NotificationsComp from "./admin/NotificationsComp";
 import EmailCreationComp from "./admin/EmailCreationComp";
 import IdentityManagementComp from "./admin/IdentityManagementComp";
 import HomeComp from "./home/HomeComp";
+import AboutComp from "./home/AboutComp";
+import CourseComp from "./home/CourseComp";
+import ItSupportComp from "./home/ItsupportComp";
+import ReviewsComp from "./home/ReviewsComp";
+import InterviewQuestionsComp from "./home/InterviewQuestionsComp";
+import BlogsComp from "./home/BlogsComp";
+import ContactusComp from "./home/ContactusComp";
+import NewbatchComp from "./home/NewbatchComp";
 
 function App() {
   return (
@@ -78,6 +86,14 @@ function App() {
         <Route path="/admin/email-creation" element={<EmailCreationComp />} />
         <Route path="/identity-management" element={<IdentityManagementComp />} />
         <Route path="/admin/identity-management" element={<IdentityManagementComp />} />
+        <Route path="/about" element={<AboutComp />} />
+        <Route path="/courses" element={<CourseComp />} />
+        <Route path="/newbatches" element={<NewbatchComp />} />
+        <Route path="/it-support" element={<ItSupportComp />} />
+        <Route path="/contactus" element={<ContactusComp />} />
+        <Route path="/reviews" element={<ReviewsComp />} />
+        <Route path="/interview-questions" element={<InterviewQuestionsComp />} />
+        <Route path="/blogs" element={<BlogsComp />} />
       </Routes>
       
     </BrowserRouter>

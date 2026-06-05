@@ -1,0 +1,602 @@
+/* ========== MOBILE MENU BUTTON ========== */
+.newbatch-menu-icon {
+  display: none;
+  position: absolute;
+  top: 25px;
+  right: 20px;
+  z-index: 150;
+  font-size: 32px;
+  color: #fff;
+  background: rgba(30,41,59,0.7);
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .newbatch-menu-icon {
+    display: block;
+  }
+  .newbatch-navigation-menu-wrapper {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 220px;
+    height: 100vh;
+    background: rgba(15,23,42,0.97);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 100px 20px 0 20px;
+    transition: right 0.4s cubic-bezier(.4,0,.2,1);
+    gap: 18px;
+    z-index: 200;
+  }
+  .newbatch-navigation-menu-wrapper.active {
+    right: 0;
+  }
+  .newbatch-single-nav-item {
+    width: 100%;
+    font-size: 16px;
+    text-align: left;
+    padding: 12px 0;
+  }
+  .newbatch-logo-image-container {
+    width: 100px;
+    height: 80px;
+    border-bottom-right-radius: 50px;
+  }
+  .newbatch-logo-image-container img {
+    width: 60px;
+  }
+}
+
+/* ========== LOGO SEMICIRCLE ========== */
+.newbatch-logo-image-container {
+  border-bottom-right-radius: 100px 80px;
+  background: linear-gradient(135deg, #fff 60%, #facc15 100%);
+  box-shadow: 0 4px 15px rgba(145, 62, 62, 0.12);
+}
+
+/* ========== BACKGROUND SLIDER RESET ========== */
+.newbatch-background-image-wrapper img {
+  animation: bgSlide 20s infinite;
+}
+.newbatch-background-image-wrapper img:nth-child(1) {
+  animation-delay: 0s;
+}
+.newbatch-background-image-wrapper img:nth-child(2) {
+  animation-delay: 10s;
+}
+
+@keyframes bgSlide {
+  0% { opacity: 0; }
+  2% { opacity: 1; }
+  48% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* ========== COURSE CARD SIDE-BY-SIDE ========== */
+.newbatch-course-card-container {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0;
+  min-height: 320px;
+}
+.newbatch-course-image-wrapper, .newbatch-course-description-box {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.newbatch-course-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+.newbatch-course-description-box p {
+  font-size: 1.1rem;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .newbatch-course-card-container {
+    flex-direction: column;
+    min-height: 0;
+  }
+  .newbatch-course-image-wrapper, .newbatch-course-description-box {
+    min-height: 180px;
+  }
+}
+/* =========================================
+   GLOBAL RESET
+========================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.Newbatch-main-container {
+  width: 100%;
+  background: #f8fafc;
+}
+
+
+/* =========================================
+   HERO SECTION
+========================================= */
+
+.newbatch-main-hero-section {
+  position: relative;
+  width: 100vw;
+  min-width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+
+/* =========================================
+   BACKGROUND SLIDER
+========================================= */
+
+.newbatch-background-image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
+  z-index: 0;
+}
+
+/* Ensure slider images always fill hero section on all devices */
+.newbatch-background-image-wrapper img {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
+  object-fit: cover;
+  opacity: 0;
+  left: 0;
+  top: 0;
+  animation: bgSlide 20s infinite;
+}
+
+  
+
+
+/* FIRST IMAGE */
+
+.newbatch-background-image-wrapper img:nth-child(1) {
+  animation-delay: 0s;
+}
+
+/* SECOND IMAGE */
+
+.newbatch-background-image-wrapper img:nth-child(2) {
+  animation-delay: 10s;
+}
+
+
+/* SLIDER ANIMATION */
+
+@keyframes bgSlide {
+
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  45% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+
+/* =========================================
+   DARK OVERLAY
+========================================= */
+
+.newbatch-main-hero-section::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  z-index: 1;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.newbatch-logo-image-container {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 180px;
+  height: 140px;
+
+  background: rgba(92, 70, 70, 0.9);
+
+  border-bottom-right-radius: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 100;
+
+  box-shadow: 0 4px 15px rgba(145, 62, 62, 0.2);
+}
+
+.newbatch-logo-image-container img {
+  width: 120px;
+
+  object-fit: contain;
+}
+
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+/* NAVBAR with background for visibility */
+.newbatch-navigation-menu-wrapper {
+  position: absolute;
+  top: 0px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  z-index: 100;
+  background: rgba(30, 41, 59, 0.55); /* slate-800, semi-transparent */
+  border-radius: 18px;
+  padding: 8px 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  backdrop-filter: blur(4px);
+}
+
+
+/* NAV ITEMS */
+
+.newbatch-single-nav-item {
+  color: #facc15;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  padding: 10px 15px;
+
+  border-radius: 8px;
+
+  transition: all 0.3s ease;
+}
+
+.newbatch-single-nav-item:hover {
+  background: rgba(255,255,255,0.15);
+
+  color: #38bdf8;
+
+  backdrop-filter: blur(6px);
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================
+   DROPDOWN
+========================================= */
+
+.newbatch-jobs-dropdown-wrapper {
+  position: relative;
+}
+
+.newbatch-dropdown-content-box {
+  position: absolute;
+
+  top: 45px;
+  left: 0;
+
+  min-width: 170px;
+
+  background: white;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  display: none;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.newbatch-jobs-dropdown-wrapper:hover
+.newbatch-dropdown-content-box {
+  display: block;
+}
+
+.newbatch-dropdown-content-box div {
+  padding: 12px 15px;
+
+  color: #111827;
+
+  font-weight: 600;
+
+  transition: 0.3s;
+}
+
+.newbatch-dropdown-content-box div:hover {
+  background: #f3f4f6;
+
+  color: #2563eb;
+}
+
+
+/* =========================================
+   MOBILE MENU BUTTON
+========================================= */
+
+.newbatch-menu-icon {
+  display: none;
+
+  position: absolute;
+
+  top: 25px;
+  right: 20px;
+
+  z-index: 150;
+
+  font-size: 28px;
+
+  color: white;
+
+  cursor: pointer;
+}
+
+
+/* =========================================
+   COURSE SECTION
+========================================= */
+
+.newbatch-course-grid-layout {
+  width: 100%;
+
+  padding: 70px 8%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 40px;
+
+  background: #f8fafc;
+}
+
+
+/* COURSE CARD */
+
+.newbatch-course-card-container {
+  width: 100%;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  background: #ffffff;
+
+  border-radius: 22px;
+
+  overflow: hidden;
+
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+
+  transition: 0.3s;
+}
+
+.newbatch-course-card-container:hover {
+  transform: translateY(-5px);
+}
+
+
+/* =========================================
+   IMAGE SECTION
+========================================= */
+
+.newbatch-course-image-wrapper {
+  flex: 1;
+}
+
+.newbatch-course-image-wrapper img {
+  width: 100%;
+  height: 100%;
+
+  min-height: 320px;
+
+  object-fit: cover;
+}
+
+
+/* =========================================
+   CONTENT SECTION
+========================================= */
+
+.newbatch-course-description-box {
+  flex: 1;
+
+  min-height: 320px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  background: #ffffff;
+}
+
+.newbatch-course-description-box p {
+  font-size: 20px;
+
+  line-height: 1.8;
+
+  color: #374151;
+
+  font-weight: 500;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 992px) {
+
+  .newbatch-course-card-container {
+    flex-direction: column;
+  }
+
+  .newbatch-course-image-wrapper img {
+    min-height: 260px;
+  }
+
+  .newbatch-course-description-box {
+    min-height: auto;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE NAVIGATION
+========================================= */
+
+@media (max-width: 768px) {
+
+  .newbatch-navigation-menu-wrapper {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 260px;
+    height: 100vh;
+    background: rgba(30, 41, 59, 0.92); /* slate-800, more opaque for mobile */
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 100px 16px 32px 16px;
+    transition: 0.4s ease;
+    gap: 22px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+    backdrop-filter: blur(6px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .newbatch-navigation-menu-wrapper.active {
+    right: 0;
+  }
+
+  .newbatch-single-nav-item {
+    width: 100%;
+
+    font-size: 16px;
+  }
+
+  .newbatch-menu-icon {
+    display: block;
+  }
+
+  .newbatch-logo-image-container {
+    width: 120px;
+    height: 95px;
+
+    border-bottom-right-radius: 70px;
+  }
+
+  .newbatch-logo-image-container img {
+    width: 75px;
+  }
+
+  .newbatch-course-grid-layout {
+    padding: 40px 15px;
+  }
+
+  .newbatch-course-description-box p {
+    text-align: center;
+
+    font-size: 16px;
+  }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+
+  .newbatch-course-image-wrapper img {
+    min-height: 220px;
+  }
+
+  .newbatch-course-description-box {
+    padding: 20px;
+  }
+
+  .newbatch-course-description-box p {
+    font-size: 14px;
+
+    line-height: 1.6;
+  }
+
+}

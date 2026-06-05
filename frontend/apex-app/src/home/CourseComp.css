@@ -1,0 +1,521 @@
+/* ========================= */
+/* GLOBAL */
+/* ========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.CourseComp {
+  width: 100%;
+  overflow-x: hidden;
+  background: #f5f7fb;
+  font-family: Arial, sans-serif;
+}
+
+/* ========================= */
+/* HEADER SECTION */
+/* ========================= */
+
+.apex-header-section {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* BACKGROUND IMAGE */
+
+.apex-background-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.apex-slider-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: fadeEffect 1s ease-in-out;
+}
+
+/* SMOOTH FADE */
+
+@keyframes fadeEffect {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ========================= */
+/* NAVBAR */
+/* ========================= */
+
+.apex-navbar-main {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 15px 40px;
+  z-index: 1000;
+
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* LOGO */
+
+.apex-logo-wrapper img {
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+/* NAV LINKS */
+
+.apex-navbar-container {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.apex-nav-link {
+  color: white;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.apex-nav-link:hover {
+  color: #00bfff;
+}
+
+/* MOBILE MENU ICON */
+
+.apex-menu-icon {
+  display: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* DROPDOWN */
+
+.apex-dropdown-wrapper {
+  position: relative;
+}
+
+.apex-dropdown-menu-box {
+  position: absolute;
+  top: 35px;
+  left: 0;
+
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+
+  min-width: 150px;
+
+  display: none;
+}
+
+.apex-dropdown-wrapper:hover .apex-dropdown-menu-box {
+  display: block;
+}
+
+.apex-dropdown-menu-box div {
+  padding: 12px;
+  cursor: pointer;
+  color: black;
+}
+
+.apex-dropdown-menu-box div:hover {
+  background: #f0f0f0;
+}
+
+/* ========================= */
+/* COURSE SECTION */
+/* ========================= */
+
+.course-content-wrapper {
+  width: 100%;
+  padding: 60px 5%;
+}
+
+.course-content-wrapper h1 {
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 50px;
+  color: #0b1c39;
+}
+
+/* COURSE LIST */
+
+.course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* COURSE ITEM */
+
+.course-item {
+  display: flex;
+
+  align-items: stretch;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  width: 100%;
+
+  min-height: 350px;
+
+  border-radius: 15px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.course-item:hover {
+  transform: translateY(-5px);
+}
+
+/* COURSE IMAGE */
+
+.course-item {
+  width: 100%;
+
+  display: flex;
+  align-items: stretch;
+
+  gap: 25px;
+
+  background: #ffffff;
+  border-radius: 20px;
+
+  padding: 25px;
+
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+  overflow: hidden;
+}
+
+/* LEFT SIDE IMAGE */
+
+.course-image {
+  flex: 1;
+
+  min-height: 650px;
+  max-height: 650px;
+
+  background: #9eb7d3;
+
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.course-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  display: block;
+  border-radius: 18px;
+}
+
+
+/* RIGHT SIDE CONTENT */
+
+.course-details {
+  flex: 1;
+
+  min-height: 650px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 10px 5px;
+}
+
+.course-details h2 {
+  font-size: 38px;
+  margin-bottom: 25px;
+  color: #1c2940;
+}
+
+.skill-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+}
+
+.skill-section h3 {
+  width: 100%;
+}
+
+.skill-section p {
+  width: calc(50% - 6px);
+
+  margin: 0;
+
+  background: #f5f7fb;
+
+  padding: 10px 14px;
+
+  border-radius: 8px;
+
+  font-size: 17px;
+
+  box-sizing: border-box;
+}
+
+/* BUTTON */
+
+.enroll-btn {
+  width: 100%;
+
+  margin-top: 20px;
+
+  padding: 16px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #1677ff;
+
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.enroll-btn:hover {
+  background: #005fe0;
+}
+
+/* ========================= */
+/* POPUP */
+/* ========================= */
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,0.6);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 2000;
+}
+
+.popup-box {
+  width: 90%;
+  max-width: 400px;
+
+  background: white;
+  padding: 30px;
+
+  border-radius: 15px;
+}
+
+.popup-box h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.popup-box input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.popup-buttons button {
+  flex: 1;
+  padding: 12px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #0077ff;
+  color: white;
+
+  cursor: pointer;
+}
+
+/* ========================= */
+/* FOOTER */
+/* ========================= */
+
+.course-footer {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+
+  background: #0b1c39;
+  color: white;
+}
+
+/* ========================= */
+/* MOBILE RESPONSIVE */
+/* ========================= */
+
+@media screen and (max-width: 992px) {
+
+  .apex-menu-icon {
+    display: block;
+  }
+
+  .apex-navbar-container {
+    position: absolute;
+    top: 80px;
+    right: -100%;
+
+    width: 260px;
+    height: auto;
+
+    background: rgba(0,0,0,0.95);
+
+    flex-direction: column;
+    align-items: flex-start;
+
+    padding: 25px;
+
+    transition: 0.4s;
+  }
+
+  .apex-navbar-container.active {
+    right: 0;
+  }
+
+ .course-item {
+    flex-direction: column;
+  }
+
+  .course-image,
+  .course-details {
+    width: 100%;
+    min-height: auto;
+    max-height: unset;
+  }
+
+  .course-image {
+    height: 500px;
+  }
+  .course-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .course-details h2 {
+    font-size: 32px;
+    text-align: center;
+  }
+
+  .enroll-btn {
+    font-size: 20px;
+  }
+
+}
+
+/* MOBILE */
+
+@media screen and (max-width: 576px) {
+
+  .apex-navbar-main {
+    padding: 15px 20px;
+  }
+
+  .apex-logo-wrapper img {
+    width: 110px;
+  }
+
+  .course-content-wrapper h1 {
+    font-size: 30px;
+  }
+
+  .course-item {
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .course-image {
+    height: 350px;
+  }
+
+  .course-details h2 {
+    font-size: 26px;
+  }
+
+  .skill-section h3 {
+    font-size: 18px;
+  }
+
+    .skill-section p {
+    width: 100%;
+    font-size: 15px;
+  }
+
+  .enroll-btn {
+    padding: 14px;
+    font-size: 18px;
+  }
+
+}
+@media (max-width: 768px) {
+
+  .course-item {
+    flex-direction: column;
+  }
+
+  .course-image,
+  .course-details {
+    width: 100%;
+  }
+
+  .course-image {
+    height: 250px;
+  }
+
+}

@@ -1,0 +1,214 @@
+/* =========================
+   GLOBAL STYLES
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+.interview-questions-main-hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Background Image */
+.interview-questions-background-image-wrapper img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+}
+
+/* Overlay */
+.interview-questions-main-hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+/* =========================
+   LOGO
+========================= */
+.interview-questions-logo-image-container {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  z-index: 100;
+}
+
+.interview-questions-logo-image-container img {
+  width: 150px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.interview-questions-navigation-menu-wrapper {
+  position: absolute;
+  top: 12px;
+  right: 40px;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 30px;
+}
+
+/* Nav Items */
+.interview-questions-single-nav-item {
+  position: relative;
+  color: #dde9f1;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.interview-questions-single-nav-item:hover {
+  color: #ffd700;
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+.interview-questions-jobs-dropdown-wrapper {
+  position: relative;
+}
+
+.interview-questions-dropdown-content-box {
+  position: absolute;
+  top: 35px;
+  left: 0;
+
+  min-width: 170px;
+
+  background: #fff;
+  color: #000;
+
+  border-radius: 10px;
+  overflow: hidden;
+
+  display: none;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Show Dropdown */
+.interview-questions-jobs-dropdown-wrapper:hover .interview-questions-dropdown-content-box {
+  display: block;
+}
+
+/* Dropdown Items */
+.interview-questions-dropdown-content-box div {
+  padding: 12px 16px;
+  transition: 0.3s;
+}
+
+.interview-questions-dropdown-content-box div:hover {
+  background: #f2f2f2;
+}
+
+/* =========================
+   COURSES SECTION
+========================= */
+.interview-questions-course-grid-layout {
+  width: 100%;
+  padding: 80px 8%;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+
+  background: #f8f9fa;
+}
+
+/* Course Card */
+.interview-questions-course-card-container {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+
+  background: #fff;
+
+  padding: 25px;
+  border-radius: 18px;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+
+  transition: 0.3s;
+}
+
+.interview-questions-course-card-container:hover {
+  transform: translateY(-6px);
+}
+
+/* Course Images */
+.interview-questions-course-image-wrapper img {
+  width: 230px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Course Text */
+.interview-questions-course-description-box p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+@media (max-width: 992px) {
+
+  .interview-questions-course-grid-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .interview-questions-course-card-container {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .interview-questions-navigation-menu-wrapper {
+    gap: 15px;
+    right: 20px;
+    flex-wrap: wrap;
+  }
+
+  .interview-questions-single-nav-item {
+    font-size: 15px;
+  }
+
+  .interview-questions-logo-image-container {
+    left: 20px;
+  }
+
+  .interview-questions-logo-image-container img {
+    width: 90px;
+  }
+
+  .interview-questions-course-image-wrapper img {
+    width: 100%;
+    height: auto;
+  }
+}

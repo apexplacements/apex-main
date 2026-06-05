@@ -1,0 +1,214 @@
+/* =========================
+   GLOBAL STYLES
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+.mock-main-hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Background Image */
+.mock-background-image-wrapper img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+}
+
+/* Overlay */
+.mock-main-hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+/* =========================
+   LOGO
+========================= */
+.mock-logo-image-container {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  z-index: 100;
+}
+
+.mock-logo-image-container img {
+  width: 150px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.mock-navigation-menu-wrapper {
+  position: absolute;
+  top: 12px;
+  right: 40px;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 30px;
+}
+
+/* Nav Items */
+.mock-single-nav-item {
+  position: relative;
+  color: #dde9f1;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.mock-single-nav-item:hover {
+  color: #ffd700;
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+.mock-jobs-dropdown-wrapper {
+  position: relative;
+}
+
+.mock-dropdown-content-box {
+  position: absolute;
+  top: 35px;
+  left: 0;
+
+  min-width: 170px;
+
+  background: #fff;
+  color: #000;
+
+  border-radius: 10px;
+  overflow: hidden;
+
+  display: none;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Show Dropdown */
+.mock-jobs-dropdown-wrapper:hover .mock-dropdown-content-box {
+  display: block;
+}
+
+/* Dropdown Items */
+.mock-dropdown-content-box div {
+  padding: 12px 16px;
+  transition: 0.3s;
+}
+
+.mock-dropdown-content-box div:hover {
+  background: #f2f2f2;
+}
+
+/* =========================
+   COURSES SECTION
+========================= */
+.mock-course-grid-layout {
+  width: 100%;
+  padding: 80px 8%;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+
+  background: #f8f9fa;
+}
+
+/* Course Card */
+.mock-course-card-container {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+
+  background: #fff;
+
+  padding: 25px;
+  border-radius: 18px;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+
+  transition: 0.3s;
+}
+
+.mock-course-card-container:hover {
+  transform: translateY(-6px);
+}
+
+/* Course Images */
+.mock-course-image-wrapper img {
+  width: 230px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Course Text */
+.mock-course-description-box p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+@media (max-width: 992px) {
+
+  .mock-course-grid-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .mock-course-card-container {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .mock-navigation-menu-wrapper {
+    gap: 15px;
+    right: 20px;
+    flex-wrap: wrap;
+  }
+
+  .mock-single-nav-item {
+    font-size: 15px;
+  }
+
+  .mock-logo-image-container {
+    left: 20px;
+  }
+
+  .mock-logo-image-container img {
+    width: 90px;
+  }
+
+  .mock-course-image-wrapper img {
+    width: 100%;
+    height: auto;
+  }
+}

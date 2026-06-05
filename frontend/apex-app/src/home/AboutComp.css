@@ -1,0 +1,495 @@
+/* ========================= */
+/* MAIN CONTAINER */
+/* ========================= */
+
+.container-nav{
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ========================= */
+/* BACKGROUND SLIDER */
+/* ========================= */
+
+.bg-slider{
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+.slider-image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: fadeSlider 1.5s ease-in-out;
+}
+
+@keyframes fadeSlider{
+
+  from{
+    opacity: 0.4;
+    transform: scale(1.03);
+  }
+
+  to{
+    opacity: 1;
+    transform: scale(1);
+  }
+
+}
+
+/* ========================= */
+/* NAVBAR */
+/* ========================= */
+
+.navbar{
+  width: 100%;
+  padding: 15px 50px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(8px);
+}
+
+/* ========================= */
+/* LOGO */
+/* ========================= */
+
+.logo-container{
+  display: flex;
+  align-items: center;
+}
+
+.logo{
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+/* ========================= */
+/* NAVIGATION */
+/* ========================= */
+
+.nav-links{
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.nav-item{
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+  position: relative;
+}
+
+.nav-item:hover{
+  color: #38bdf8;
+}
+
+/* ========================= */
+/* DROPDOWN */
+/* ========================= */
+
+.dropdown-menu{
+  position: absolute;
+  top: 45px;
+  left: 0;
+
+  min-width: 180px;
+  background: white;
+
+  border-radius: 10px;
+  overflow: hidden;
+
+  display: none;
+  flex-direction: column;
+
+  box-shadow: 0px 5px 15px rgba(0,0,0,0.15);
+}
+
+.dropdown-menu div{
+  padding: 12px 18px;
+  color: black;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.dropdown-menu div:hover{
+  background: #e2e8f0;
+}
+
+.dropdown:hover .dropdown-menu{
+  display: flex;
+}
+
+/* ========================= */
+/* MENU ICON */
+/* ========================= */
+
+.menu-icon{
+  display: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+/* ========================= */
+/* TABLET */
+/* ========================= */
+
+@media screen and (max-width: 992px){
+
+  .navbar{
+    padding: 15px 25px;
+  }
+
+  .nav-links{
+    gap: 18px;
+  }
+
+  .nav-item{
+    font-size: 16px;
+  }
+
+}
+
+/* ========================= */
+/* MOBILE + TABLET MENU */
+/* ========================= */
+
+@media screen and (max-width: 768px){
+
+  .menu-icon{
+    display: block;
+  }
+
+  .nav-links{
+
+    position: absolute;
+    top: 100px;
+    right: 0;
+
+    width: 280px;
+
+    background: rgba(15,23,42,0.97);
+
+    flex-direction: column;
+    align-items: flex-start;
+
+    padding: 25px;
+
+    gap: 20px;
+
+    display: none;
+
+    border-radius: 0px 0px 0px 20px;
+  }
+
+  .nav-links.active{
+    display: flex;
+  }
+
+  .nav-item{
+    width: 100%;
+    font-size: 17px;
+  }
+
+  .dropdown-menu{
+    position: static;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .logo{
+    width: 65px;
+    height: 65px;
+  }
+
+}
+
+/* ========================= */
+/* SMALL MOBILE */
+/* ========================= */
+
+@media screen and (max-width: 480px){
+
+  .navbar{
+    padding: 12px 15px;
+  }
+
+  .logo{
+    width: 55px;
+    height: 55px;
+  }
+
+  .menu-icon{
+    font-size: 26px;
+  }
+
+  .nav-links{
+    width: 230px;
+    top: 80px;
+  }
+
+}
+
+
+/* ========================= */
+/* MAIN ABOUT SECTION */
+/* ========================= */
+
+.about{
+  width: 100%;
+  min-height: 100vh;
+  background: #f3f4f6;
+  padding: 60px 20px;
+}
+
+/* CONTAINER */
+
+.about .w-full{
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
+}
+
+/* HEADER */
+
+.text-center{
+  text-align: center;
+}
+
+.mb-10{
+  margin-bottom: 50px;
+}
+
+.text-5xl{
+  font-size: 52px;
+}
+
+.font-bold{
+  font-weight: bold;
+}
+
+.text-blue-900{
+  color: #0f172a;
+}
+
+.mb-4{
+  margin-bottom: 20px;
+}
+
+.text-lg{
+  font-size: 18px;
+}
+
+.text-gray-700{
+  color: #374151;
+}
+
+.max-w-5xl{
+  max-width: 1200px;
+}
+
+.mx-auto{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.leading-8{
+  line-height: 34px;
+}
+
+/* ========================= */
+/* CARD SECTIONS */
+/* ========================= */
+
+section{
+  width: 100%;
+  background: #ffffff;
+  padding: 40px;
+  margin-bottom: 35px;
+  border-radius: 24px;
+  box-shadow: 0px 5px 18px rgba(0,0,0,0.08);
+  transition: 0.3s ease;
+}
+
+section:hover{
+  transform: translateY(-5px);
+}
+
+/* SECTION HEADINGS */
+
+.text-4xl{
+  font-size: 38px;
+}
+
+.mb-6{
+  margin-bottom: 25px;
+}
+
+/* HEADING COLORS */
+
+.text-blue-800{
+  color: #1d4ed8;
+}
+
+.text-green-700{
+  color: #15803d;
+}
+
+.text-purple-700{
+  color: #7e22ce;
+}
+
+.text-red-700{
+  color: #dc2626;
+}
+
+.text-yellow-700{
+  color: #ca8a04;
+}
+
+.text-pink-700{
+  color: #db2777;
+}
+
+.text-indigo-700{
+  color: #4338ca;
+}
+
+.text-gray-800{
+  color: #1f2937;
+}
+
+/* PARAGRAPH */
+
+p{
+  text-align: justify;
+  font-size: 18px;
+  line-height: 34px;
+  color: #374151;
+}
+
+/* ========================= */
+/* TABLET RESPONSIVE */
+/* ========================= */
+
+@media screen and (max-width: 992px){
+
+  .about{
+    padding: 40px 25px;
+  }
+
+  .text-5xl{
+    font-size: 42px;
+  }
+
+  .text-4xl{
+    font-size: 32px;
+  }
+
+  .text-lg{
+    font-size: 17px;
+  }
+
+  p{
+    font-size: 17px;
+    line-height: 30px;
+  }
+
+  section{
+    padding: 30px;
+  }
+
+}
+
+/* ========================= */
+/* MOBILE RESPONSIVE */
+/* ========================= */
+
+@media screen and (max-width: 768px){
+
+  .about{
+    padding: 30px 15px;
+  }
+
+  .text-5xl{
+    font-size: 32px;
+    line-height: 45px;
+  }
+
+  .text-4xl{
+    font-size: 26px;
+    line-height: 38px;
+  }
+
+  .text-lg{
+    font-size: 15px;
+    line-height: 28px;
+  }
+
+  p{
+    font-size: 15px;
+    line-height: 28px;
+  }
+
+  section{
+    padding: 22px;
+    border-radius: 18px;
+    margin-bottom: 25px;
+  }
+
+}
+
+/* ========================= */
+/* SMALL MOBILE */
+/* ========================= */
+
+@media screen and (max-width: 480px){
+
+  .about{
+    padding: 20px 10px;
+  }
+
+  .text-5xl{
+    font-size: 26px;
+    line-height: 38px;
+  }
+
+  .text-4xl{
+    font-size: 22px;
+    line-height: 32px;
+  }
+
+  .text-lg{
+    font-size: 14px;
+    line-height: 25px;
+  }
+
+  p{
+    font-size: 14px;
+    line-height: 25px;
+  }
+
+  section{
+    padding: 18px;
+    border-radius: 15px;
+  }
+
+}

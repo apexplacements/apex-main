@@ -1,0 +1,450 @@
+/* =========================
+   GLOBAL STYLES
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+.itsupport-main-hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Background Image */
+.itsupport-background-image-wrapper img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+}
+
+/* Overlay */
+.itsupport-main-hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+/* =========================
+   LOGO
+========================= */
+.itsupport-logo-image-container {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 100;
+}
+
+.itsupport-logo-image-container img {
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.itsupport-navigation-menu-wrapper {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 30px;
+}
+
+/* Nav Items */
+.itsupport-single-nav-item {
+  position: relative;
+  color: #21323d;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.itsupport-single-nav-item:hover {
+  color: #ffd700;
+}
+
+/* =========================
+   DROPDOWN
+========================= */
+.itsupport-jobs-dropdown-wrapper {
+  position: relative;
+}
+
+.itsupport-dropdown-content-box {
+  position: absolute;
+  top: 35px;
+  left: 0;
+
+  min-width: 170px;
+
+  background: #fff;
+  color: #000;
+
+  border-radius: 10px;
+  overflow: hidden;
+
+  display: none;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Show Dropdown */
+.itsupport-jobs-dropdown-wrapper:hover .itsupport-dropdown-content-box {
+  display: block;
+}
+
+/* Dropdown Items */
+.itsupport-dropdown-content-box div {
+  padding: 12px 16px;
+  transition: 0.3s;
+}
+
+.itsupport-dropdown-content-box div:hover {
+  background: #f2f2f2;
+}
+
+/* =========================
+   COURSES SECTION
+========================= */
+.itsupport-course-grid-layout {
+  width: 100%;
+  padding: 80px 8%;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+
+  background: #f8f9fa;
+}
+
+/* Course Card */
+.itsupport-course-card-container {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+
+  background: #fff;
+
+  padding: 25px;
+  border-radius: 18px;
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+
+  transition: 0.3s;
+}
+
+.itsupport-course-card-container:hover {
+  transform: translateY(-6px);
+}
+
+/* Course Images */
+.itsupport-course-image-wrapper img {
+  width: 230px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Course Text */
+.itsupport-course-description-box p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+@media (max-width: 992px) {
+
+  .itsupport-course-grid-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .itsupport-course-card-container {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .itsupport-navigation-menu-wrapper {
+    gap: 15px;
+    right: 20px;
+    flex-wrap: wrap;
+  }
+
+  .itsupport-single-nav-item {
+    font-size: 15px;
+  }
+
+  .itsupport-logo-image-container {
+    left: 20px;
+  }
+
+  .itsupport-logo-image-container img {
+    width: 90px;
+  }
+
+  .itsupport-course-image-wrapper img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* =========================================
+   SUPPORT SECTION STYLES
+========================================= */
+
+.itsupport-lab-mock-placement-section {
+  width: 100%;
+
+  padding: 80px 6%;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 40px;
+
+  background: #f8f9fa;
+}
+
+
+/* COMMON CARD STYLES */
+
+.itsupport-lab-section-wrapper,
+.itsupport-mock-section-wrapper,
+.itsupport-placement-section-wrapper,
+.itsupport-jobs-wrapper {
+
+  background: #ffffff;
+
+  border-radius: 20px;
+
+  padding: 25px;
+
+  box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+
+  transition: 0.3s;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+}
+
+
+.itsupport-lab-section-wrapper:hover,
+.itsupport-mock-section-wrapper:hover,
+.itsupport-placement-section-wrapper:hover,
+.itsupport-jobs-wrapper:hover {
+
+  transform: translateY(-6px);
+
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+}
+
+
+/* =========================================
+   H1 CENTER
+========================================= */
+
+.itsupport-lab-section-wrapper h1,
+.itsupport-mock-section-wrapper h1,
+.itsupport-placement-section-wrapper h1,
+.itsupport-jobs-wrapper h1 {
+
+  text-align: center;
+
+  font-size: 28px;
+
+  margin-bottom: 25px;
+
+  color: #1e293b;
+}
+
+
+/* =========================================
+   IMAGE WRAPPERS
+========================================= */
+
+.itsupport-lab-img-wrapper,
+.itsupport-mock-img-wrapper,
+.itsupport-placement-img-wrapper,
+.itsupport-jobs-img-wrapper {
+
+  width: 100%;
+
+  height: 260px;
+
+  overflow: hidden;
+
+  border-radius: 15px;
+
+  margin-bottom: 20px;
+}
+
+
+/* IMAGES */
+
+.itsupport-lab-img-wrapper img,
+.itsupport-mock-img-wrapper img,
+.itsupport-placement-img-wrapper img,
+.itsupport-jobs-img-wrapper img {
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+
+/* =========================================
+   DESCRIPTION BOX
+========================================= */
+
+.itsupport-lab-description,
+.itsupport-mock-description,
+.itsupport-placement-description,
+.itsupport-job-description {
+
+  width: 100%;
+
+  min-height: 140px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+}
+
+
+/* PARAGRAPH */
+
+.itsupport-lab-description p,
+.itsupport-mock-description p,
+.itsupport-placement-description p,
+.itsupport-job-description p {
+
+  font-size: 16px;
+
+  line-height: 1.8;
+
+  color: #475569;
+}
+
+
+/* =========================================
+   TABLET RESPONSIVE
+========================================= */
+
+@media (max-width: 992px) {
+
+  .itsupport-lab-mock-placement-section {
+
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .itsupport-lab-mock-placement-section {
+
+    padding: 50px 20px;
+
+    gap: 30px;
+  }
+
+  .itsupport-lab-section-wrapper h1,
+  .itsupport-mock-section-wrapper h1,
+  .itsupport-placement-section-wrapper h1,
+  .itsupport-jobs-wrapper h1 {
+
+    font-size: 22px;
+  }
+
+  .itsupport-lab-img-wrapper,
+  .itsupport-mock-img-wrapper,
+  .itsupport-placement-img-wrapper,
+  .itsupport-jobs-img-wrapper {
+
+    height: 220px;
+  }
+
+  .itsupport-lab-description p,
+  .itsupport-mock-description p,
+  .itsupport-placement-description p,
+  .itsupport-job-description p {
+
+    font-size: 15px;
+  }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE DEVICES
+========================================= */
+
+@media (max-width: 480px) {
+
+  .itsupport-lab-section-wrapper,
+  .itsupport-mock-section-wrapper,
+  .itsupport-placement-section-wrapper,
+  .itsupport-jobs-wrapper {
+
+    padding: 18px;
+  }
+
+  .itsupport-lab-img-wrapper,
+  .itsupport-mock-img-wrapper,
+  .itsupport-placement-img-wrapper,
+  .itsupport-jobs-img-wrapper {
+
+    height: 180px;
+  }
+
+  .itsupport-lab-section-wrapper h1,
+  .itsupport-mock-section-wrapper h1,
+  .itsupport-placement-section-wrapper h1,
+  .itsupport-jobs-wrapper h1 {
+
+    font-size: 18px;
+  }
+
+}
