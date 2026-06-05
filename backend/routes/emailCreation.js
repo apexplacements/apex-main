@@ -131,7 +131,18 @@ const initializeTable = async () => {
 };
 
 initializeTable().catch((err) => {
-  console.error("Failed to initialize generated_emails table:", err);
+  if (err && err.code === "ECONNREFUSED") {
+    console.error(
+      "Failed to initialize generated_emails table: DB connection refused.",
+      `Host=${process.env.DB_HOST || "127.0.0.1"}`,
+      `User=${process.env.DB_USER || "root"}`
+    );
+    console.error(
+      "Please verify backend/.env or environment variables for DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, and ensure MySQL is accessible."
+    );
+  } else {
+    console.error("Failed to initialize generated_emails table:", err);
+  }
 });
 
 router.get("/users", async (req, res) => {
