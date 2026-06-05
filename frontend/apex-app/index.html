@@ -8,6 +8,21 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      (function () {
+        var loc = window.location;
+        var pathname = loc.pathname;
+        if (
+          !loc.hash &&
+          pathname !== "/" &&
+          pathname !== "/index.html" &&
+          !pathname.startsWith("/api") &&
+          pathname.indexOf(".") === -1
+        ) {
+          window.location.replace("/#" + pathname + loc.search);
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
