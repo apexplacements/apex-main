@@ -71,6 +71,51 @@ app.use(
 );
 
 app.use(
+  "/api/students",
+  require("./routes/students")
+);
+
+app.use(
+  "/api/placement-drives",
+  require("./routes/placementDrives")
+);
+
+app.use(
+  "/api/jobs",
+  require("./routes/jobs")
+);
+
+app.use(
+  "/api/companies",
+  require("./routes/companies")
+);
+
+app.use(
+  "/api/interviews",
+  require("./routes/interviews")
+);
+
+app.use(
+  "/api/placements",
+  require("./routes/placements")
+);
+
+app.use(
+  "/api/notifications",
+  require("./routes/notifications")
+);
+
+app.use(
+  "/api/resumes",
+  require("./routes/resumes")
+);
+
+app.use(
+  "/api/payments",
+  require("./routes/payments")
+);
+
+app.use(
   "/api",
   require("./routes/clientEnquiries")
 );
