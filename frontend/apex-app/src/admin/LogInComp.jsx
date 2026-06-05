@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import apiClient from "../apiClient";
 import "./LogInComp.css";
 
 const LogInComp = () => {
@@ -43,7 +43,7 @@ const LogInComp = () => {
 
     try {
       console.log('Login attempt for:', formData.email);
-      const res = await axios.post("/api/login", {
+      const res = await apiClient.post("/api/login", {
         email: formData.email,
         password: formData.password,
       });
