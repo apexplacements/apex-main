@@ -19,31 +19,28 @@ function loadEnv() {
   envPaths.push(path.resolve(process.cwd(), "..", ".env"));
 
   const uniqPaths = [...new Set(envPaths)];
-
-  console.log("Env loader starting from:", {
-    cwd: process.cwd(),
-    dirname: __dirname,
-    explicitPath: explicitPath || null,
-    candidatePaths: uniqPaths,
-  });
-
+  // Determine whether loader should be silent.
+  // Precedence: explicit ENV_LOADER_SILENT/DOTENV_SILENT -> otherwise silent in production only.
+  const explicitSilent = (process.env.ENV_LOADER_SILENT || process.env.DOTENV_SILENT || "")
+    .toString()
+    .toLowerCase();
+  const silent = explicitSilent === "true" ? true : explicitSilent === "false" ? false : (process.env.NODE_ENV === "production");
   for (const envPath of uniqPaths) {
-    if (!fs.existsSync(envPath)) continue;
+    if (!fs.existsSync(envPath)) {
+      if (!silent) console.debug && console.debug(`Env loader: ${envPath} not found`);
+      continue;
+    }
 
     const dotenvResult = dotenv.config({ path: envPath });
     if (!dotenvResult.error) {
-      console.log(`Loaded environment variables from ${envPath}`);
+      if (!silent) console.log && console.log(`Loaded environment variables from ${envPath}`);
       return { envPath, result: dotenvResult };
     }
 
-    console.warn(`Attempted to load env from ${envPath} but got error:`, dotenvResult.error);
+    if (!silent) console.warn && console.warn(`Attempted to load env from ${envPath} but got error:`, dotenvResult.error);
   }
 
-  console.warn(
-    "Warning: no .env file was found in backend or parent folders, and no environment file was loaded.",
-    "Tried:",
-    uniqPaths
-  );
+  if (!silent) console.warn && console.warn("Env loader: no .env file was found in candidate paths", uniqPaths);
 
   return { envPath: null, result: null };
 }
