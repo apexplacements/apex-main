@@ -6,7 +6,7 @@ const CUSTOMER_REQUESTS_TABLE = "customer_requests";
 
 console.log("Loaded clientEnquiries route using table:", CUSTOMER_REQUESTS_TABLE);
 
-router.post(["/client-enquiries", "/customer-requests", "/customerrequest"], async (req, res) => {
+const createCustomerRequest = async (req, res) => {
   try {
     const { full_name, phone, email, support_type, description } = req.body;
 
@@ -45,7 +45,12 @@ router.post(["/client-enquiries", "/customer-requests", "/customerrequest"], asy
       message: "Failed to submit request"
     });
   }
-});
+};
+
+router.post("/client-enquiries", createCustomerRequest);
+router.post("/customer-requests", createCustomerRequest);
+router.post("/customerrequest", createCustomerRequest);
+
 
 router.get(["/client-enquiries", "/customer-requests"], async (req, res) => {
   try {

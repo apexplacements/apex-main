@@ -3,7 +3,7 @@ import axios from "axios";
 import './ClientEnquiryComp.css';
 import { useNavigate } from "react-router-dom";
 
-const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const baseUrl = import.meta.env.VITE_API_URL?.trim() || "http://localhost:5000";
 
 function ClientEnquiry() {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ function ClientEnquiry() {
 
     try {
       const response = await axios.post(
-        `${baseUrl}/api/customerrequest`,
+        `${baseUrl}/api/customer-requests`,
         formData
       );
       
