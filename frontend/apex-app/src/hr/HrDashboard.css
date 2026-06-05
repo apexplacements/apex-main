@@ -369,7 +369,24 @@
     grid-template-columns: 1fr;
   }
 
-  .header,
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header h1 {
+    position: static;
+    transform: none;
+    margin: 0 auto;
+    font-size: 20px;
+    max-width: calc(100% - 160px);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .hr-dashboard-metrics {
     flex-direction: column;
     align-items: stretch;
@@ -378,6 +395,16 @@
   .hr-quick-button {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .menu-btn,
+  .logout-btn,
+  .hr-button {
+    width: auto;
+  }
+
+  .logout-btn {
+    white-space: nowrap;
   }
 
   .hr-table th,
@@ -393,12 +420,6 @@
   .hr-table-panel,
   .dashboard-card {
     padding: 18px;
-  }
-
-  .hr-button,
-  .menu-btn,
-  .logout-btn {
-    width: 100%;
   }
 }
 
@@ -434,14 +455,20 @@
 }
 
 .menu-btn {
-  background: #ffffff;
-  color: #1f2937;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  background: transparent;
+  color: #ffffff;
+  box-shadow: none;
+  padding: 8px;
+  border-radius: 6px;
 }
 
 .logout-btn {
-  background: #1d4ed8;
-  color: #ffffff;
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  padding: 8px 14px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.12);
 }
 
 .hr-button.primary {
@@ -665,4 +692,142 @@
   padding: 14px 18px;
   border-radius: 18px;
   border: 1px solid rgba(252, 211, 77, 0.4);
+}
+
+/* --- Admin visual theme and responsive sidebar/menu tweaks --- */
+.header {
+  background: linear-gradient(90deg,#071028 0%, #0b1220 100%);
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 12px;
+  align-items: center;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  min-height: 64px;
+}
+.header h1 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-size: 28px;
+  color: #2b66ff;
+  font-weight: 900;
+  letter-spacing: 2px;
+  z-index: 10;
+  pointer-events: none;
+  font-family: Georgia, 'Times New Roman', serif;
+  text-transform: uppercase;
+}
+.menu-btn { display: inline-flex; }
+
+.sidebar-menu {
+  background: #0f2233;
+  color: #e6f0ff;
+  border: none;
+  box-shadow: none;
+  padding: 12px;
+  min-width: 220px;
+}
+.nav-item {
+  background: rgba(255,255,255,0.03);
+  color: #dbeeff;
+  padding: 18px 22px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255,255,255,0.04);
+  font-size: 1.05rem;
+  text-transform: none;
+  box-shadow: inset 0 -1px 0 rgba(255,255,255,0.02);
+}
+.nav-item:hover { background: rgba(255,255,255,0.04); color: #fff; }
+.nav-item.active { background: #243b57; color: #ffffff; box-shadow: 0 6px 18px rgba(11,35,64,0.25); }
+
+.dashboard-card {
+  text-align: center;
+  padding: 30px 22px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.dashboard-card h3 {
+  font-family: Georgia, 'Times New Roman', serif;
+  color: #0f172a;
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+}
+.dashboard-card p {
+  margin-top: 6px;
+  font-size: 44px;
+  color: #2b66ff;
+  font-weight: 800;
+}
+
+/* layout for large dashboard tiles similar to provided screenshot */
+.hr-summary-grid {
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 22px;
+}
+
+/* Mobile behavior: collapse sidebar into a slide-over menu */
+@media (max-width: 900px) {
+  .menu-btn { display: inline-block; }
+  .header h1 { font-size: 20px; }
+  .main-layout { grid-template-columns: 1fr; }
+  .sidebar-menu { display: none; position: fixed; left: 0; top: 64px; height: calc(100% - 64px); width: 78%; max-width: 320px; z-index: 120; overflow-y: auto; border-radius: 0 12px 12px 0; padding: 18px; }
+  .sidebar-menu.show { display: grid; }
+  .dashboard-content { padding-top: 8px; }
+  .hr-section-split { grid-template-columns: 1fr; }
+  .hr-summary-grid { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
+}
+
+@media (max-width: 420px) {
+  .hr-summary-grid { grid-template-columns: 1fr; }
+  .dashboard-card p { font-size: 34px; }
+}
+
+/* make menu button visible and styled on small screens */
+.menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: transparent;
+  border-radius: 6px;
+  box-shadow: none;
+  border: none;
+  padding: 6px;
+}
+
+.menu-btn .hamburger {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+.menu-btn .hamburger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 2px;
+}
+
+.menu-icon {
+  display: block;
+  color: #ffffff;
+}
+
+.hr-success-banner {
+  background: #d1fae5;
+  color: #065f46;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(34,197,94,0.12);
 }

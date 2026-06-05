@@ -49,6 +49,37 @@ router.post("/", async (req, res) => {
   try {
     console.log(`login route: received email=${email}`);
 
+    const [generatedRows] = await db.query(
+      "SELECT id, user_id, user_name, role, email, default_password, password, password_reset_required FROM generated_emails WHERE email = ? LIMIT 1",
+      [email]
+    );
+    console.log(`login route: generated_emails count=${generatedRows.length}`);
+
+    if (generatedRows.length) {
+      const entry = generatedRows[0];
+      const correctPassword = entry.password || entry.default_password;
+
+      if (correctPassword !== password) {
+        return res.status(401).json({
+          success: false,
+          message: "Incorrect password",
+        });
+      }
+
+      return res.json({
+        success: true,
+        message: "Login successful.",
+        data: {
+          id: entry.id,
+          user_id: entry.user_id,
+          user_name: entry.user_name,
+          role: entry.role,
+          email: entry.email,
+          password_reset_required: entry.password_reset_required,
+        },
+      });
+    }
+
     const [registeredRows] = await db.query(
       "SELECT id, name, email, password FROM registered_users WHERE email = ? LIMIT 1",
       [email]
@@ -75,49 +106,15 @@ router.post("/", async (req, res) => {
           user_name: registered.name,
           role: "registered",
           email: registered.email,
-          registeredOnly: true,
           password_reset_required: false,
-          source: "registered_users"
+          source: "registered_users",
         },
       });
     }
 
-    const [rows] = await db.query(
-      "SELECT id, user_id, user_name, role, email, default_password, password, password_reset_required FROM generated_emails WHERE email = ? LIMIT 1",
-      [email]
-    );
-    console.log(`login route: generated_emails count=${rows.length}`);
-
-    if (!rows.length) {
-      return res.status(401).json({
-        success: false,
-        message: "Email not found in the system",
-      });
-    }
-
-    const entry = rows[0];
-    
-    // Check password against the password column if set, otherwise check default_password
-    const correctPassword = entry.password || entry.default_password;
-    
-    if (correctPassword !== password) {
-      return res.status(401).json({
-        success: false,
-        message: "Incorrect password",
-      });
-    }
-
-    res.json({
-      success: true,
-      message: "Login successful. Please reset your password.",
-      data: {
-        id: entry.id,
-        user_id: entry.user_id,
-        user_name: entry.user_name,
-        role: entry.role,
-        email: entry.email,
-        password_reset_required: entry.password_reset_required,
-      },
+    return res.status(401).json({
+      success: false,
+      message: "Email not found in the system",
     });
   } catch (err) {
     console.error(err);

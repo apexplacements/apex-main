@@ -454,12 +454,32 @@ const HrDashboard = () => {
   return (
     <div className="dashboard-page hr-portal-page">
       <header className="header">
-        <button className="menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
-          ☰
+        <button
+          className="menu-btn"
+          onClick={() => setMenuOpen(!menuOpen)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              setMenuOpen(!menuOpen);
+            }
+          }}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="hr-sidebar"
+        >
+          <svg className="menu-icon" width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="0" y="0" width="22" height="2" rx="1" fill="currentColor" />
+            <rect x="0" y="8" width="22" height="2" rx="1" fill="currentColor" />
+            <rect x="0" y="16" width="22" height="2" rx="1" fill="currentColor" />
+          </svg>
         </button>
-        <h1>HR Dashboard</h1>
+        <h1>HR DASHBOARD</h1>
         <button
           className="logout-btn"
+          onClick={() => {
+            sessionStorage.removeItem('currentUser');
+            navigate('/home');
+          }}
           onClick={() => {
             sessionStorage.removeItem("currentUser");
             navigate("/login");
@@ -470,7 +490,7 @@ const HrDashboard = () => {
       </header>
 
       <div className="main-layout">
-        <aside className={`sidebar-menu ${menuOpen ? "show" : ""}`}>
+        <aside id="hr-sidebar" className={`sidebar-menu ${menuOpen ? "show" : ""}`}>
           {sections.map((section) => (
             <button
               key={section.key}
@@ -487,7 +507,6 @@ const HrDashboard = () => {
         </aside>
 
         <main className="dashboard-content hr-content">
-          {error && <div className="hr-error-banner">{error}</div>}
           {success && <div className="hr-success-banner">{success}</div>}
 
           {activeSection === "dashboard" && (

@@ -51,9 +51,10 @@ const LogInComp = () => {
       if (res.data && res.data.success) {
         const userData = res.data.data;
 
-        if (userData.registeredOnly || userData.role === "registered") {
+        if (userData.role === "registered") {
           sessionStorage.setItem("currentUser", JSON.stringify(userData));
-          navigate("/home");
+          const dashboardPath = getRoleDashboard(role);
+          navigate(dashboardPath);
           return;
         }
 
@@ -63,7 +64,6 @@ const LogInComp = () => {
           navigate("/password-reset", {
             state: { userData },
           });
-        } else {
           // Password already reset, redirect to role-based dashboard
           sessionStorage.setItem("currentUser", JSON.stringify(userData));
           navigate(getRoleDashboard(userData.role));
