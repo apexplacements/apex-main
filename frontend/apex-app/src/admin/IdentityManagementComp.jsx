@@ -22,6 +22,8 @@ const IdentityManagementComp = () => {
     course: "",
     validUpto: "",
   });
+  const [photoFile, setPhotoFile] = useState(null);
+  const [photoPreview, setPhotoPreview] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
   const [statusType, setStatusType] = useState("");
   const [loading, setLoading] = useState(false);
@@ -90,6 +92,19 @@ const IdentityManagementComp = () => {
     }
   };
 
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+    setPhotoFile(file || null);
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => setPhotoPreview(reader.result || "");
+      reader.readAsDataURL(file);
+    } else {
+      setPhotoPreview("");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatusMessage("");
@@ -103,15 +118,23 @@ const IdentityManagementComp = () => {
 
     setLoading(true);
     try {
-      const res = await axios.post("/api/identity-management", {
-        selectedEmailId,
-        idNo: formData.idNo,
-        fullName: formData.fullName,
-        role: formData.role,
-        email: formData.email,
-        batchId: formData.batchId,
-        course: formData.course,
-        validUpto: formData.validUpto,
+      const payload = new FormData();
+      payload.append("selectedEmailId", selectedEmailId);
+      payload.append("idNo", formData.idNo);
+      payload.append("fullName", formData.fullName);
+      payload.append("role", formData.role);
+      payload.append("email", formData.email);
+      payload.append("batchId", formData.batchId);
+      payload.append("course", formData.course);
+      payload.append("validUpto", formData.validUpto);
+      if (photoFile) {
+        payload.append("photo", photoFile);
+      }
+
+      const res = await axios.post("/api/identity-management", payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
       if (res.data?.success) {
@@ -133,7 +156,10 @@ const IdentityManagementComp = () => {
   const downloadPDF = async () => {
     const element = cardRef.current;
 
-    const canvas = await html2canvas(element);
+    const canvas = await html2canvas(element, {
+      backgroundColor: null,
+      scale: 2,
+    });
 
     const imgData = canvas.toDataURL("image/png");
 
@@ -287,6 +313,14 @@ const IdentityManagementComp = () => {
           onChange={handleChange}
         />
 
+        <label htmlFor="photoUpload">Upload Photo</label>
+        <input
+          type="file"
+          id="photoUpload"
+          accept="image/*"
+          onChange={handlePhotoChange}
+        />
+
         <input
           type="text"
           name="expiryMonth"
@@ -320,16 +354,21 @@ const IdentityManagementComp = () => {
         ref={cardRef}
       >
         <div className="card-header">
-            <img
-                src="/apex-logo.png"
-                alt="Apex Logo"
-                className="id-logo"
-            />
-          <h3>Apex Skills & Placement Center</h3>
-          <p>www.apexplacements.in</p>
+          <div className="card-header-top">
+            <img src="/apex-logo.png" alt="Apex Logo" className="id-logo" />
+            <div className="card-header-title">
+              <h3>Apex Skills & Placement Center</h3>
+              <p>www.apexplacements.in</p>
+            </div>
+          </div>
         </div>
 
         <div className="card-body">
+          {photoPreview && (
+            <div className="photo-preview">
+              <img src={photoPreview} alt="Photo Preview" />
+            </div>
+          )}
 
   <div className="card-row">
     <span className="label">ID No</span>
