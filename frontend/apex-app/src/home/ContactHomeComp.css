@@ -1,0 +1,238 @@
+/* ContactHomeComp.css */
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container8 {
+  width: 100%;
+
+  background: #0f172a;
+  color: white;
+
+  padding: 60px 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+/* =========================
+   HEADING
+========================= */
+
+.container8 h1 {
+  font-size: 42px;
+  font-weight: 700;
+
+  margin-bottom: 25px;
+
+  color: #ffcc00;
+}
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.container8 p {
+  max-width: 1000px;
+
+  font-size: 17px;
+  line-height: 1.9;
+
+  color: #e2e8f0;
+
+  margin-bottom: 30px;
+}
+
+/* =========================
+   CONTACT DETAILS
+========================= */
+
+.container8 h4 {
+  font-size: 18px;
+  font-weight: 400;
+
+  margin-bottom: 15px;
+
+  color: #f8fafc;
+}
+
+/* =========================
+   FOOTER NAVIGATION
+========================= */
+
+.footer-nav {
+  margin-top: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 30px;
+
+  flex-wrap: wrap;
+}
+
+.footer-nav span {
+  font-size: 16px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.footer-nav span:hover {
+  color: #ffcc00;
+}
+
+/* =========================
+   SOCIAL MEDIA
+========================= */
+
+.footer-social {
+  margin-top: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  flex-wrap: wrap;
+}
+
+.footer-social a {
+  width: 50px;
+  height: 50px;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.3s;
+}
+
+.footer-social a:hover {
+  transform: translateY(-5px);
+  background: #ffcc00;
+}
+
+.footer-social img {
+  width: 26px;
+  height: 26px;
+
+  object-fit: contain;
+}
+
+/* =========================
+   COPYRIGHT
+========================= */
+
+.copyright {
+  margin-top: 35px;
+
+  font-size: 15px;
+
+  color: #cbd5e1;
+}
+
+/* =========================
+   TABLET RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+
+  .container8 h1 {
+    font-size: 36px;
+  }
+
+  .container8 p {
+    font-size: 16px;
+  }
+
+  .container8 h4 {
+    font-size: 17px;
+  }
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media screen and (max-width: 768px) {
+
+  .container8 {
+    padding: 45px 15px;
+  }
+
+  .container8 h1 {
+    font-size: 30px;
+  }
+
+  .container8 p {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .container8 h4 {
+    font-size: 15px;
+  }
+
+  .footer-nav {
+    gap: 18px;
+  }
+
+  .footer-nav span {
+    font-size: 14px;
+  }
+
+  .footer-social a {
+    width: 42px;
+    height: 42px;
+  }
+
+  .footer-social img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .copyright {
+    font-size: 13px;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media screen and (max-width: 480px) {
+
+  .container8 h1 {
+    font-size: 26px;
+  }
+
+  .container8 p {
+    font-size: 14px;
+  }
+
+  .footer-nav {
+    gap: 14px;
+  }
+
+  .footer-nav span {
+    font-size: 13px;
+  }
+
+  .footer-social {
+    gap: 12px;
+  }
+}

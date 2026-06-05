@@ -31,7 +31,7 @@ function App() {
         <Route path="/" element={<HomeComp />} />
         <Route path="/home" element={<HomeComp />} />
         <Route path="/login" element={<LogInComp />} />
-        
+        <Route path="/admin/login" element={<LogInComp />} />
         <Route path="/register" element={<RegisterComp />} />
         <Route path="/forgot-password" element={<ForgotPasswordComp />} />
         <Route path="/password-reset" element={<PasswordResetComp />} />

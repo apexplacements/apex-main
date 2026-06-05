@@ -1,0 +1,294 @@
+/* CandidateEnquiryComp.css */
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container-candidate {
+  width: 100%;
+  min-height: 100vh;
+
+  background: #f8fafc;
+
+  overflow: hidden;
+}
+
+/* =========================
+   TOP TITLE
+========================= */
+
+.container-candidate > h2 {
+  width: 100%;
+
+  text-align: center;
+
+  font-size: 42px;
+  font-weight: 700;
+
+  color: #0f172a;
+
+  padding: 10px 0px;
+}
+
+/* =========================
+   MAIN FLEX SECTION
+========================= */
+
+.partner-section {
+  width: 100%;
+  min-height: calc(100vh - 130px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================
+   IMAGE SECTION
+========================= */
+
+.image-box {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.image-box img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* =========================
+   FORM SECTION
+========================= */
+
+.form-box {
+  width: 50%;
+  min-height: 100%;
+
+  background: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 50px 60px;
+}
+
+/* =========================
+   FORM TITLE
+========================= */
+
+.form-box h2 {
+  font-size: 38px;
+  font-weight: 700;
+
+  color: #0f172a;
+
+  margin-bottom: 15px;
+}
+
+.form-box p {
+  font-size: 16px;
+  color: #64748b;
+
+  margin-bottom: 30px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-box form {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================
+   LABELS
+========================= */
+
+.form-box label {
+  font-size: 15px;
+  font-weight: 600;
+
+  color: #1e293b;
+
+  margin-bottom: 8px;
+  margin-top: 18px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.form-box input,
+.form-box select {
+  width: 100%;
+  height: 52px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+
+  padding: 0 15px;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition: 0.3s;
+}
+
+.form-box input:focus,
+.form-box select:focus {
+  border-color: #0f172a;
+  box-shadow: 0 0 5px rgba(15, 23, 42, 0.2);
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.form-box button {
+  width: 100%;
+  height: 55px;
+
+  margin-top: 30px;
+
+  background: #0f172a;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.form-box button:hover {
+  background: #1e293b;
+  transform: translateY(-2px);
+}
+
+/* =========================
+   TABLET RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+
+  .container-candidate > h2 {
+    font-size: 34px;
+    padding: 30px 0;
+  }
+
+  .form-box {
+    padding: 35px;
+  }
+
+  .form-box h2 {
+    font-size: 30px;
+  }
+
+  .form-box p {
+    font-size: 15px;
+  }
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media screen and (max-width: 768px) {
+
+  .partner-section {
+    flex-direction: column;
+  }
+
+  .image-box {
+    width: 100%;
+    height: 320px;
+  }
+
+  .form-box {
+    width: 100%;
+
+    padding: 30px 20px;
+  }
+
+  .container-candidate > h2 {
+    font-size: 28px;
+    padding: 25px 10px;
+  }
+
+  .form-box h2 {
+    font-size: 26px;
+    text-align: center;
+  }
+
+  .form-box p {
+    text-align: center;
+  }
+
+  .form-box input,
+  .form-box select {
+    height: 48px;
+    font-size: 14px;
+  }
+
+  .form-box button {
+    height: 50px;
+    font-size: 15px;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media screen and (max-width: 480px) {
+
+  .image-box {
+    height: 250px;
+  }
+
+  .container-candidate > h2 {
+    font-size: 24px;
+  }
+
+  .form-box {
+    padding: 25px 15px;
+  }
+
+  .form-box h2 {
+    font-size: 22px;
+  }
+
+  .form-box p {
+    font-size: 14px;
+  }
+
+  .form-box label {
+    font-size: 14px;
+  }
+
+  .form-box input,
+  .form-box select {
+    height: 45px;
+    font-size: 13px;
+  }
+
+  .form-box button {
+    font-size: 14px;
+  }
+}

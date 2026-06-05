@@ -71,6 +71,7 @@ const loadBatches = async () => {
           className="logout-btn"
           onClick={() => {
             localStorage.removeItem("token");
+            sessionStorage.removeItem("currentUser");
             navigate("/");
           }}
         >

@@ -1,0 +1,196 @@
+/* AboutHomeComp.css */
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container-about {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 20px 10px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+/* =========================
+   LEFT IMAGE SECTION
+========================= */
+
+.container-about img {
+  width: 50%;
+  height: 100vh;
+
+  object-fit: cover;
+  display: block;
+}
+
+/* =========================
+   RIGHT CONTENT SECTION
+========================= */
+
+.container-about .content {
+  width: 50%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 40px 60px;
+
+  background: #f8fafc;
+}
+
+/* =========================
+   HEADING
+========================= */
+
+.container-about .content h1 {
+  font-size: 48px;
+  font-weight: bold;
+
+  color: #0f172a;
+
+  margin-bottom: 25px;
+
+  line-height: 1.2;
+}
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.container-about .content h4 {
+  font-size: 18px;
+  font-weight: 400;
+
+  color: #475569;
+
+  line-height: 1.9;
+
+  margin-bottom: 35px;
+
+  text-align: justify;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.container-about .content button {
+  width: 180px;
+  height: 52px;
+
+  background: #0f172a;
+  color: white;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.container-about .content button:hover {
+  background: #1e293b;
+  transform: translateY(-2px);
+}
+
+/* =========================
+   TABLET RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+
+  .container-about {
+    min-height: auto;
+  }
+
+  .container-about img {
+    height: auto;
+  }
+
+  .container-about .content {
+    padding: 30px;
+  }
+
+  .container-about .content h1 {
+    font-size: 38px;
+  }
+
+  .container-about .content h4 {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media screen and (max-width: 768px) {
+
+  .container-about {
+    flex-direction: column;
+  }
+
+  .container-about img {
+    width: 100%;
+    height: 350px;
+  }
+
+  .container-about .content {
+    width: 100%;
+    min-height: auto;
+
+    padding: 25px 20px;
+  }
+
+  .container-about .content h1 {
+    font-size: 32px;
+    text-align: center;
+  }
+
+  .container-about .content h4 {
+    font-size: 15px;
+    line-height: 1.8;
+    text-align: justify;
+  }
+
+  .container-about .content button {
+    width: 100%;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media screen and (max-width: 480px) {
+
+  .container-about img {
+    height: 280px;
+  }
+
+  .container-about .content h1 {
+    font-size: 26px;
+  }
+
+  .container-about .content h4 {
+    font-size: 14px;
+  }
+
+  .container-about .content {
+    padding: 20px 15px;
+  }
+}
