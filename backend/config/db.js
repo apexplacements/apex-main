@@ -1,11 +1,7 @@
 const mysql = require("mysql2");
-const dotenv = require("dotenv");
-const path = require("path");
+const { loadEnv } = require("./env");
 
-const dotenvResult = dotenv.config({ path: path.join(__dirname, "..", ".env") });
-if (dotenvResult.error) {
-  console.warn("Warning: backend/.env file not found or could not be loaded in backend/config/db.js");
-}
+loadEnv();
 
 const dbHost = process.env.DB_HOST || "127.0.0.1";
 const dbUser = process.env.DB_USER || "root";
