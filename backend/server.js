@@ -5,7 +5,22 @@ const register = require("./routes/register");
 
 const app = express();
 
-app.use(cors());
+const allowedOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(",").map((origin) => origin.trim())
+  : [];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`CORS policy does not allow access from origin ${origin}`));
+      }
+    },
+    optionsSuccessStatus: 200,
+  })
+);
 app.use(express.json());
 
 //Registration Route

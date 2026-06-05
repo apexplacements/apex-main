@@ -1,43 +1,45 @@
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LogInComp from "./admin/LogInComp";
-import RegisterComp from "./admin/RegisterComp";
-import ForgotPasswordComp from "./admin/ForgotPasswordComp";
-import PasswordResetComp from "./admin/PasswordResetComp";
-import DashboardComp from "./admin/DashboardComp";
-import HrDashboard from "./hr/HrDashboard";
-import TrainerDashboardComp from "./trainer/TrainerDashboardComp";
-import StudentDashboardComp from "./student/StudentDashboardComp";
-import PlacementOfficerDashboardComp from "./placementcell/PlacementOfficerDashboardComp";
-import ManageUsersComp from "./admin/ManageUsersComp";
-import ManageStudentsComp from "./admin/ManageStudentsComp";
-import ManageCustomersComp from "./admin/ManageCustomersComp";
-import PlacementDrivesComp from "./admin/PlacementDrivesComp";
-import CreateBatchesComp from "./admin/CreateBatchesComp";
-import UploadDataComp from "./admin/UploadDataComp";
-import ManageCoursesComp from "./admin/ManageCoursesComp";
-import ManageTrainersComp from "./admin/ManageTrainersComp";
-import ViewReportsComp from "./admin/ViewReportsComp";
-import SettingsComp from "./admin/SettingsComp";
-import AuditLogsComp from "./admin/AuditLogsComp";
-import NotificationsComp from "./admin/NotificationsComp";
-import EmailCreationComp from "./admin/EmailCreationComp";
-import IdentityManagementComp from "./admin/IdentityManagementComp";
-import HomeComp from "./home/HomeComp";
-import AboutComp from "./home/AboutComp";
-import CourseComp from "./home/CourseComp";
-import ItSupportComp from "./home/ItsupportComp";
-import ReviewsComp from "./home/ReviewsComp";
-import InterviewQuestionsComp from "./home/InterviewQuestionsComp";
-import BlogsComp from "./home/BlogsComp";
-import ContactusComp from "./home/ContactusComp";
-import NewbatchComp from "./home/NewbatchComp";
+const LogInComp = lazy(() => import("./admin/LogInComp"));
+const RegisterComp = lazy(() => import("./admin/RegisterComp"));
+const ForgotPasswordComp = lazy(() => import("./admin/ForgotPasswordComp"));
+const PasswordResetComp = lazy(() => import("./admin/PasswordResetComp"));
+const DashboardComp = lazy(() => import("./admin/DashboardComp"));
+const HrDashboard = lazy(() => import("./hr/HrDashboard"));
+const TrainerDashboardComp = lazy(() => import("./trainer/TrainerDashboardComp"));
+const StudentDashboardComp = lazy(() => import("./student/StudentDashboardComp"));
+const PlacementOfficerDashboardComp = lazy(() => import("./placementcell/PlacementOfficerDashboardComp"));
+const ManageUsersComp = lazy(() => import("./admin/ManageUsersComp"));
+const ManageStudentsComp = lazy(() => import("./admin/ManageStudentsComp"));
+const ManageCustomersComp = lazy(() => import("./admin/ManageCustomersComp"));
+const PlacementDrivesComp = lazy(() => import("./admin/PlacementDrivesComp"));
+const CreateBatchesComp = lazy(() => import("./admin/CreateBatchesComp"));
+const UploadDataComp = lazy(() => import("./admin/UploadDataComp"));
+const ManageCoursesComp = lazy(() => import("./admin/ManageCoursesComp"));
+const ManageTrainersComp = lazy(() => import("./admin/ManageTrainersComp"));
+const ViewReportsComp = lazy(() => import("./admin/ViewReportsComp"));
+const SettingsComp = lazy(() => import("./admin/SettingsComp"));
+const AuditLogsComp = lazy(() => import("./admin/AuditLogsComp"));
+const NotificationsComp = lazy(() => import("./admin/NotificationsComp"));
+const EmailCreationComp = lazy(() => import("./admin/EmailCreationComp"));
+const IdentityManagementComp = lazy(() => import("./admin/IdentityManagementComp"));
+const HomeComp = lazy(() => import("./home/HomeComp"));
+const AboutComp = lazy(() => import("./home/AboutComp"));
+const CourseComp = lazy(() => import("./home/CourseComp"));
+const ItSupportComp = lazy(() => import("./home/ItsupportComp"));
+const ReviewsComp = lazy(() => import("./home/ReviewsComp"));
+const InterviewQuestionsComp = lazy(() => import("./home/InterviewQuestionsComp"));
+const BlogsComp = lazy(() => import("./home/BlogsComp"));
+const ContactusComp = lazy(() => import("./home/ContactusComp"));
+const NewbatchComp = lazy(() => import("./home/NewbatchComp"));
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomeComp />} />
-        <Route path="/home" element={<HomeComp />} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<HomeComp />} />
+          <Route path="/home" element={<HomeComp />} />
         <Route path="/login" element={<LogInComp />} />
         <Route path="/admin/login" element={<LogInComp />} />
         <Route path="/register" element={<RegisterComp />} />
@@ -95,7 +97,7 @@ function App() {
         <Route path="/interview-questions" element={<InterviewQuestionsComp />} />
         <Route path="/blogs" element={<BlogsComp />} />
       </Routes>
-      
+      </Suspense>
     </BrowserRouter>
   );
 }
