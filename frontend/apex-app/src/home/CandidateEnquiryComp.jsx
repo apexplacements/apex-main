@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./CandidateEnquiryComp.css";
 
-const baseUrl = import.meta.env.VITE_API_URL || "";
+const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function CandidateEnquiryComp() {
 
@@ -12,6 +12,9 @@ function CandidateEnquiryComp() {
     email: "",
     career_option: ""
   });
+
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
 
@@ -26,21 +29,43 @@ function CandidateEnquiryComp() {
 
     e.preventDefault();
 
+    // Validate form
+    if (!formData.full_name.trim() || !formData.phone.trim() || !formData.email.trim()) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
+    setLoading(true);
+    setMessage("");
+
     try {
 
       const response = await axios.post(
-        `${baseUrl}/api/userrequest`,
+        `${baseUrl}/api/userrequests`,
         formData
       );
 
-      alert(response.data.message);
+      setMessage(response.data.message || "Request submitted successfully!");
+      alert(response.data.message || "Request submitted successfully!");
+
+      // Reset form
+      setFormData({
+        full_name: "",
+        phone: "",
+        email: "",
+        career_option: ""
+      });
 
     } catch (error) {
 
-      console.log(error);
+      console.error("Error details:", error.response?.data || error.message);
 
-      alert("Request Failed");
+      const errorMsg = error.response?.data?.message || error.message || "Request Failed. Please try again.";
+      setMessage(errorMsg);
+      alert(errorMsg);
 
+    } finally {
+      setLoading(false);
     }
 
   };
@@ -130,7 +155,7 @@ function CandidateEnquiryComp() {
          onChange={handleChange}
         >
 
-        <option value="select" defaultValue>
+        <option value="">
         --- Select Career Option ---
         </option>
 
@@ -163,9 +188,9 @@ function CandidateEnquiryComp() {
 
 
             {/* BUTTON */}
-            <button type="submit">
+            <button type="submit" disabled={loading}>
 
-              Request A Free Demo
+              {loading ? "Submitting..." : "Request A Free Demo"}
 
             </button>
 

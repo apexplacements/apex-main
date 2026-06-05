@@ -6,6 +6,47 @@ const CUSTOMER_REQUESTS_TABLE = "customer_requests";
 
 console.log("Loaded clientEnquiries route using table:", CUSTOMER_REQUESTS_TABLE);
 
+router.post(["/client-enquiries", "/customer-requests", "/customerrequest"], async (req, res) => {
+  try {
+    const { full_name, phone, email, support_type, description } = req.body;
+
+    // Validate required fields
+    if (!full_name || !phone || !email) {
+      return res.status(400).json({
+        success: false,
+        message: "Name, Phone, and Email are required"
+      });
+    }
+
+    const sql = `
+      INSERT INTO ${CUSTOMER_REQUESTS_TABLE} 
+      (full_name, phone, email, support_type, description, created_at) 
+      VALUES (?, ?, ?, ?, ?, NOW())
+    `;
+
+    const [result] = await pool.query(sql, [
+      full_name,
+      phone,
+      email,
+      support_type || null,
+      description || null
+    ]);
+
+    res.json({
+      success: true,
+      message: "Request submitted successfully!",
+      id: result.insertId
+    });
+  } catch (err) {
+    console.error("Error creating customer request:", err);
+    res.status(500).json({
+      success: false,
+      error: err.message,
+      message: "Failed to submit request"
+    });
+  }
+});
+
 router.get(["/client-enquiries", "/customer-requests"], async (req, res) => {
   try {
     const sql = `

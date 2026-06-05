@@ -3,52 +3,67 @@ import axios from "axios";
 import './ClientEnquiryComp.css';
 import { useNavigate } from "react-router-dom";
 
-const baseUrl = import.meta.env.VITE_API_URL || "";
+const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function ClientEnquiry() {
   const navigate = useNavigate();
-const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
+    full_name: "",
+    phone: "",
+    email: "",
+    support_type: "",
+    description: ""
+  });
 
-  full_name: "",
-
-  phone: "",
-
-  email: "",
-
-  support_type: "",
-
-  description: ""
-
-});
-
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
-
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
-
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
+
+    // Validate required fields
+    if (!formData.full_name.trim() || !formData.phone.trim() || !formData.email.trim()) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
+    setLoading(true);
+    setMessage("");
+
     try {
       const response = await axios.post(
         `${baseUrl}/api/customerrequest`,
         formData
       );
-      alert(response.data.message);
-    } catch (error) {
-      console.log(error);
-      if (error.response && error.response.data && error.response.data.message) {
-        alert(error.response.data.message);
-      } else {
-        alert("Request Failed");
-      }
-    }
+      
+      const successMsg = response.data.message || "Request submitted successfully!";
+      setMessage(successMsg);
+      alert(successMsg);
 
+      // Reset form
+      setFormData({
+        full_name: "",
+        phone: "",
+        email: "",
+        support_type: "",
+        description: ""
+      });
+    } catch (error) {
+      console.error("Error details:", error.response?.data || error.message);
+      
+      const errorMsg = error.response?.data?.message || error.message || "Request Failed. Please try again.";
+      setMessage(errorMsg);
+      alert(errorMsg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -108,7 +123,7 @@ const [formData, setFormData] = useState({
                 value={formData.support_type}
                 onChange={handleChange}
               >
-                <option value="select" defaultValue>
+                <option value="">
                   --- Select Support Type ---
                 </option>
                 <option value="Logo Design">
@@ -140,8 +155,8 @@ const [formData, setFormData] = useState({
               ></textarea>
             </div>
             {/* Redirect Button */}
-            <button type="submit">
-              Submit
+            <button type="submit" disabled={loading}>
+              {loading ? "Submitting..." : "Submit"}
             </button>
           </form>
         </div>
