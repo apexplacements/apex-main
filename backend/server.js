@@ -60,6 +60,11 @@ app.use(
 );
 
 app.use(
+  "/api/identity-management",
+  require("./routes/identityManagement")
+);
+
+app.use(
   "/api",
   require("./routes/clientEnquiries")
 );

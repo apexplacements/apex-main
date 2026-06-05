@@ -22,13 +22,16 @@ const IdentityManagementComp = () => {
     course: "",
     validUpto: "",
   });
+  const [statusMessage, setStatusMessage] = useState("");
+  const [statusType, setStatusType] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const email = formData.email;
-   const expirationMonth = formData.validUpto
-     ? new Date(formData.validUpto).toLocaleString("default", {
-         month: "long",
-       })
-     : "";
+  const expirationMonth = formData.validUpto
+    ? new Date(formData.validUpto).toLocaleString("default", {
+        month: "long",
+      })
+    : "";
    const expirationYear = formData.validUpto
      ? new Date(formData.validUpto).getFullYear()
      : "";
@@ -84,6 +87,46 @@ const IdentityManagementComp = () => {
         role: selectedRecord.role || "",
         email: selectedRecord.email || "",
       }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatusMessage("");
+    setStatusType("");
+
+    if (!formData.fullName || !formData.email) {
+      setStatusMessage("Full name and email are required.");
+      setStatusType("error");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await axios.post("/api/identity-management", {
+        selectedEmailId,
+        idNo: formData.idNo,
+        fullName: formData.fullName,
+        role: formData.role,
+        email: formData.email,
+        batchId: formData.batchId,
+        course: formData.course,
+        validUpto: formData.validUpto,
+      });
+
+      if (res.data?.success) {
+        setStatusMessage(res.data.message || "Identity record saved.");
+        setStatusType("success");
+      } else {
+        setStatusMessage(res.data?.message || "Failed to save identity record.");
+        setStatusType("error");
+      }
+    } catch (err) {
+      console.error(err);
+      setStatusMessage("Failed to save identity record.");
+      setStatusType("error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -172,7 +215,7 @@ const IdentityManagementComp = () => {
 
       <h2>Identity Management</h2>
 
-      <div className="form-section">
+      <form className="form-section" onSubmit={handleSubmit}>
 
         <label htmlFor="generatedEmailSelect">Select Generated Email</label>
         <select
@@ -260,7 +303,17 @@ const IdentityManagementComp = () => {
           readOnly
         />
 
-      </div>
+        <button type="submit" className="save-btn" disabled={loading}>
+          {loading ? "Saving..." : "Save Identity"}
+        </button>
+
+        {statusMessage && (
+          <div className={`status-message ${statusType}`}>
+            {statusMessage}
+          </div>
+        )}
+
+      </form>
 
       <div
         className="id-card"

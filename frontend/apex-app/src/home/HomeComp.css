@@ -1,0 +1,108 @@
+/* Section */
+/* Styles for the Batches Section */
+.batches-section {
+  width: 100%;
+  padding: 20px;
+  background: #f5f7fb;
+}
+
+.batches-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.batches-header h2 {
+  color: #0b1f5c;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* Table Wrapper */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 10px;
+}
+
+/* Table */
+
+.batches-section table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  min-width: 700px;
+}
+
+/* Header */
+
+.batches-section th {
+  background: #0b1f5c;
+  color: white;
+  padding: 14px;
+  text-align: center;
+  font-size: 15px;
+}
+
+/* Rows */
+
+.batches-section td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.batches-section tr:nth-child(even) {
+  background: #f8f9fc;
+}
+
+.batches-section tr:hover {
+  background: #eef4ff;
+  transition: 0.3s;
+}
+
+/* Mobile View */
+
+@media (max-width: 768px) {
+
+  .batches-section {
+    padding: 10px;
+  }
+
+  .batches-header h2 {
+    font-size: 24px;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .batches-section table {
+    min-width: 600px;
+  }
+
+  .batches-section th,
+  .batches-section td {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+}
+
+/* Small Mobile */
+
+@media (max-width: 480px) {
+
+  .batches-header h2 {
+    font-size: 20px;
+  }
+
+  .batches-section th,
+  .batches-section td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+}

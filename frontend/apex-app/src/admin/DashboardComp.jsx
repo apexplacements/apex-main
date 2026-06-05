@@ -19,19 +19,7 @@ const DashboardComp = () => {
     pendingApplications: 75,
   };
 
-  {/*Get NewBatches Content */}
-  const [batches, setBatches] = useState([]);
-
-useEffect(() => {
-  loadBatches();
-}, []);
-
-const loadBatches = async () => {
-  const res = await axios.get("/api/batches");
-
-  setBatches(res.data.data);
-};
-
+  
   {/* Sidebar Menu Items */}
 
   const menuItems = [
@@ -152,32 +140,7 @@ const loadBatches = async () => {
         </main>
 
       </div>
-      <div className="batches-section">
-        <h2>Recent Batches</h2>
-        <table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Course</th>
-      <th>Trainer</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    {batches.map((batch) => (
-      <tr key={batch.id}>
-        <td>{batch.id}</td>
-        <td>{batch.course_name}</td>
-        <td>{batch.trainer_name}</td>
-        <td>{batch.start_date}</td>
-        <td>{batch.end_date}</td>
-      </tr>
-    ))}
-  </tbody>
-</table>
-      </div>
+      
 
     </div>
   );
