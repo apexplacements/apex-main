@@ -52,15 +52,15 @@ function App() {
         <Route path="/admin/dashboard" element={<DashboardComp />} />
         <Route path="/hr-dashboard" element={<HrDashboard />} />
         <Route path="/hr/dashboard" element={<HrDashboard />} />
-        <Route path="/trainer-dashboard" element={<TrainerDashboardComp />} />
-        <Route path="/trainer/dashboard" element={<TrainerDashboardComp />} />
-        <Route path="/student-dashboard" element={<StudentDashboardComp />} />
-        <Route path="/student/dashboard" element={<StudentDashboardComp />} />
+        <Route path="/trainer-dashboard" element={<LmsTrainerDashboard />} />
+        <Route path="/trainer/dashboard" element={<LmsTrainerDashboard />} />
+        <Route path="/student-dashboard" element={<LmsStudentDashboard />} />
+        <Route path="/student/dashboard" element={<LmsStudentDashboard />} />
         <Route path="/placement-dashboard" element={<PlacementOfficerDashboardComp />} />
         <Route path="/placement/dashboard" element={<PlacementOfficerDashboardComp />} />
         <Route path="/hr" element={<HrDashboard />} />
-        <Route path="/trainer" element={<TrainerDashboardComp />} />
-        <Route path="/student" element={<StudentDashboardComp />} />
+        <Route path="/trainer" element={<LmsTrainerDashboard />} />
+        <Route path="/student" element={<LmsStudentDashboard />} />
         <Route path="/placement" element={<PlacementOfficerDashboardComp />} />
         <Route path="/manage-users" element={<ManageUsersComp />} />
         <Route path="/admin/manage-users" element={<ManageUsersComp />} />

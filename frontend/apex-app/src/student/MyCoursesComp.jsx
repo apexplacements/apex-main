@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import apiClient from "../../apiClient";
+import apiClient from "../apiClient";
 
 const MyCoursesComp = ({ studentId, onSelectCourse }) => {
   const [courses, setCourses] = useState([]);

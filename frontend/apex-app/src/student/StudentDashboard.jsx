@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import apiClient from "../../apiClient";
+import apiClient from "../apiClient";
 import "./StudentDashboard.css";
 import MyCoursesComp from "./MyCoursesComp";
 import CoursePlayerComp from "./CoursePlayerComp";
@@ -22,8 +22,10 @@ const StudentDashboard = () => {
 
   useEffect(() => {
     const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    if (!currentUser || currentUser.role !== "std") {
-      navigate("/login");
+    // Accept both legacy and full role values for student
+    const role = currentUser?.role;
+    if (!currentUser || (role !== "std" && role !== "student")) {
+      navigate("/");
       return;
     }
     setStudentId(currentUser.id);
@@ -159,7 +161,7 @@ const StudentDashboard = () => {
             </div>
             <button className="logout-btn" onClick={() => {
               sessionStorage.removeItem("currentUser");
-              navigate("/login");
+              navigate("/");
             }}>
               Logout
             </button>

@@ -477,12 +477,8 @@ const HrDashboard = () => {
         <button
           className="logout-btn"
           onClick={() => {
-            sessionStorage.removeItem('currentUser');
-            navigate('/home');
-          }}
-          onClick={() => {
             sessionStorage.removeItem("currentUser");
-            navigate("/login");
+            navigate("/");
           }}
         >
           Logout

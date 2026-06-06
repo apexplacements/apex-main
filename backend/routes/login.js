@@ -66,6 +66,10 @@ router.post("/", async (req, res) => {
         });
       }
 
+      // Normalize role values to the short codes used by the frontend
+      const rawRole = (entry.role || "").toString().toLowerCase();
+      const normalizedRole = ROLE_MAP[rawRole] || entry.role;
+
       return res.json({
         success: true,
         message: "Login successful.",
@@ -73,7 +77,7 @@ router.post("/", async (req, res) => {
           id: entry.id,
           user_id: entry.user_id,
           user_name: entry.user_name,
-          role: entry.role,
+          role: normalizedRole,
           email: entry.email,
           password_reset_required: entry.password_reset_required,
         },

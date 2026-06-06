@@ -30,7 +30,7 @@ const TrainerDashboard = () => {
 
   const handleLogout = () => {
     sessionStorage.clear();
-    navigate("/login");
+    navigate("/");
   };
 
   const renderContent = () => {
