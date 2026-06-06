@@ -57,6 +57,7 @@ router.post("/", async (req, res) => {
 
     if (generatedRows.length) {
       const entry = generatedRows[0];
+      const entry = generatedRows[0];
       const correctPassword = entry.password || entry.default_password;
 
       if (correctPassword !== password) {
@@ -66,9 +67,18 @@ router.post("/", async (req, res) => {
         });
       }
 
-      // Normalize role values to the short codes used by the frontend
+      // Normalize role values to the short codes used by the frontend.
+      // Be forgiving: if backend stores variants like 'placementofficer' or 'placement officer'
+      // map them to 'po' so frontend routing is consistent.
       const rawRole = (entry.role || "").toString().toLowerCase();
-      const normalizedRole = ROLE_MAP[rawRole] || entry.role;
+      let normalizedRole = ROLE_MAP[rawRole] || entry.role;
+      if (!normalizedRole || normalizedRole === entry.role) {
+        if (rawRole.includes("placement")) {
+          normalizedRole = "po";
+        } else {
+          normalizedRole = ROLE_MAP[rawRole] || entry.role;
+        }
+      }
 
       return res.json({
         success: true,
