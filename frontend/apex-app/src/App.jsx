@@ -23,6 +23,8 @@ const AuditLogsComp = lazy(() => import("./admin/AuditLogsComp"));
 const NotificationsComp = lazy(() => import("./admin/NotificationsComp"));
 const EmailCreationComp = lazy(() => import("./admin/EmailCreationComp"));
 const IdentityManagementComp = lazy(() => import("./admin/IdentityManagementComp"));
+const LmsStudentDashboard = lazy(() => import("./student/StudentDashboard"));
+const LmsTrainerDashboard = lazy(() => import("./trainer/TrainerDashboard"));
 const HomeComp = lazy(() => import("./home/HomeComp"));
 const AboutComp = lazy(() => import("./home/AboutComp"));
 const CourseComp = lazy(() => import("./home/CourseComp"));
@@ -96,6 +98,12 @@ function App() {
         <Route path="/reviews" element={<ReviewsComp />} />
         <Route path="/interview-questions" element={<InterviewQuestionsComp />} />
         <Route path="/blogs" element={<BlogsComp />} />
+        
+        {/* LMS Routes */}
+        <Route path="/lms/student" element={<LmsStudentDashboard />} />
+        <Route path="/lms/student/dashboard" element={<LmsStudentDashboard />} />
+        <Route path="/lms/trainer" element={<LmsTrainerDashboard />} />
+        <Route path="/lms/trainer/dashboard" element={<LmsTrainerDashboard />} />
       </Routes>
       </Suspense>
     </HashRouter>

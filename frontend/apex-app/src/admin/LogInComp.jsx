@@ -30,8 +30,7 @@ const LogInComp = () => {
       std: "/student/dashboard",
       tr: "/trainer/dashboard",
       po: "/placement/dashboard",
-      placementofficer: "/placement/dashboard",
-      placement: "/placement/dashboard",
+      others: "/home",
     };
     return roleMap[role?.toLowerCase()] || "/admin/dashboard";
   };
@@ -51,23 +50,19 @@ const LogInComp = () => {
       if (res.data && res.data.success) {
         const userData = res.data.data;
 
-        if (userData.role === "registered") {
-          sessionStorage.setItem("currentUser", JSON.stringify(userData));
-          const dashboardPath = getRoleDashboard(role);
-          navigate(dashboardPath);
+        // Persist user session
+        sessionStorage.setItem("currentUser", JSON.stringify(userData));
+
+        // If password reset is required, send user to reset flow first
+        if (userData.password_reset_required) {
+          navigate("/password-reset", { state: { userData } });
           return;
         }
 
-        // Check if password reset is required
-        if (userData.password_reset_required) {
-          // Redirect to password reset page
-          navigate("/password-reset", {
-            state: { userData },
-          });
-          // Password already reset, redirect to role-based dashboard
-          sessionStorage.setItem("currentUser", JSON.stringify(userData));
-          navigate(getRoleDashboard(userData.role));
-        }
+        // Redirect to role-based dashboard for all other users
+        const dashboardPath = getRoleDashboard(userData.role);
+        navigate(dashboardPath);
+        return;
       } else {
         setError(res.data?.message || "Login failed");
       }

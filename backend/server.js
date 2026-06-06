@@ -120,6 +120,19 @@ app.use(
   require("./routes/clientEnquiries")
 );
 
+// ============================================
+// LMS ROUTES - TRAINER & STUDENT
+// ============================================
+app.use(
+  "/api/lms/trainer",
+  require("./routes/trainerRoutes")
+);
+
+app.use(
+  "/api/lms/student",
+  require("./routes/studentRoutes")
+);
+
 app.get("/health", (req, res) => {
   res.json({
     success: true,
