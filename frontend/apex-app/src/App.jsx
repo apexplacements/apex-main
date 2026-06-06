@@ -9,6 +9,10 @@ const HrDashboard = lazy(() => import("./hr/HrDashboard"));
 const TrainerDashboardComp = lazy(() => import("./trainer/TrainerDashboardComp"));
 const StudentDashboardComp = lazy(() => import("./student/StudentDashboardComp"));
 const PlacementOfficerDashboardComp = lazy(() => import("./placementcell/PlacementOfficerDashboardComp"));
+const PlacementStudentsComp = lazy(() => import("./placementcell/PlacementStudentsComp"));
+const PlacementDrivesCellComp = lazy(() => import("./placementcell/PlacementDrivesComp"));
+const CompaniesComp = lazy(() => import("./placementcell/CompaniesComp"));
+const PlacementReportsComp = lazy(() => import("./placementcell/PlacementReportsComp"));
 const ManageUsersComp = lazy(() => import("./admin/ManageUsersComp"));
 const ManageStudentsComp = lazy(() => import("./admin/ManageStudentsComp"));
 const ManageCustomersComp = lazy(() => import("./admin/ManageCustomersComp"));
@@ -58,6 +62,10 @@ function App() {
         <Route path="/student/dashboard" element={<LmsStudentDashboard />} />
         <Route path="/placement-dashboard" element={<PlacementOfficerDashboardComp />} />
         <Route path="/placement/dashboard" element={<PlacementOfficerDashboardComp />} />
+        <Route path="/placement-students" element={<PlacementStudentsComp />} />
+        <Route path="/placement/drives" element={<PlacementDrivesCellComp />} />
+        <Route path="/companies" element={<CompaniesComp />} />
+        <Route path="/placement-reports" element={<PlacementReportsComp />} />
         <Route path="/hr" element={<HrDashboard />} />
         <Route path="/trainer" element={<LmsTrainerDashboard />} />
         <Route path="/student" element={<LmsStudentDashboard />} />
@@ -78,6 +86,7 @@ function App() {
         <Route path="/admin/manage-trainers" element={<ManageTrainersComp />} />
         <Route path="/placement-drives" element={<PlacementDrivesComp />} />
         <Route path="/admin/placement-drives" element={<PlacementDrivesComp />} />
+        <Route path="/jobs" element={<PlacementDrivesCellComp />} />
         <Route path="/view-reports" element={<ViewReportsComp />} />
         <Route path="/admin/view-reports" element={<ViewReportsComp />} />
         <Route path="/settings" element={<SettingsComp />} />

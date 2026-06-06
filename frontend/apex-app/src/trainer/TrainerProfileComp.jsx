@@ -19,9 +19,24 @@ const TrainerProfileComp = ({ trainerId }) => {
       if (res.data.success) {
         setProfile(res.data.data);
         setFormData(res.data.data);
+        return;
       }
     } catch (err) {
-      console.error("Error fetching profile:", err);
+      // If profile not found, attempt to fetch by application user id
+      if (err?.response?.status === 404) {
+        try {
+          const alt = await apiClient.get(`/api/lms/trainer/by-user/${trainerId}`);
+          if (alt.data.success) {
+            setProfile(alt.data.data);
+            setFormData(alt.data.data);
+            return;
+          }
+        } catch (err2) {
+          console.error("Fallback by-user failed:", err2);
+        }
+      } else {
+        console.error("Error fetching profile:", err);
+      }
     } finally {
       setLoading(false);
     }
@@ -35,9 +50,11 @@ const TrainerProfileComp = ({ trainerId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await apiClient.put(`/api/lms/trainer/profile/${trainerId}`, formData);
+      const targetId = profile?.id || trainerId;
+      const res = await apiClient.put(`/api/lms/trainer/profile/${targetId}`, formData);
       if (res.data.success) {
-        setProfile(res.data.data);
+        // PUT returns a success message; re-fetch updated profile
+        await fetchProfile();
         setIsEditing(false);
         alert("Profile updated successfully!");
       }

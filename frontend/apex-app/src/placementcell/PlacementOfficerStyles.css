@@ -1,0 +1,50 @@
+.po-container{
+  padding: 18px 22px;
+  background: #f6f9fb;
+  min-height: 100vh;
+}
+.po-header{
+  background: linear-gradient(90deg,#071028 0%, #07102a 55%, #061227 100%);
+  color: #fff;
+  border-radius: 12px;
+  padding: 14px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom: 18px;
+}
+.po-header h1{ margin:0; font-family: Georgia, 'Times New Roman', serif; font-size:24px; color:#2b66ff; letter-spacing:1px; text-transform:uppercase; font-weight:800 }
+.po-logout-btn{ background:#fff; color:#0f172a; padding:8px 14px; border-radius:12px; border:none; font-weight:700; box-shadow:0 8px 20px rgba(2,6,23,0.12); cursor:pointer }
+.po-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.po-card{
+  background:#ffffff;
+  border-radius:20px;
+  padding:28px 20px;
+  text-align:center;
+  box-shadow: 0 24px 60px rgba(37,84,150,0.04);
+  border: 1px solid rgba(148,163,184,0.08);
+}
+.po-value{ font-size:44px; font-weight:900; color:#2b66ff; margin-bottom:8px }
+.po-label{ font-family: Georgia, 'Times New Roman', serif; font-size:18px; color:#0f172a; margin-top:6px }
+.po-actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:18px }
+.po-btn{ background: linear-gradient(180deg,#ffffff,#f8fbff); color:#0f172a; padding:12px 28px; border-radius:28px; text-decoration:none; border:1px solid rgba(37,84,150,0.06); font-weight:800; box-shadow: inset 0 -6px 18px rgba(43,102,255,0.03); font-family: Georgia, 'Times New Roman', serif; font-size:18px }
+
+.po-btn:hover{ transform: translateY(-2px); box-shadow: 0 12px 30px rgba(37,84,150,0.08); }
+
+@media (max-width: 1024px){
+  .po-grid{ grid-template-columns: repeat(2, minmax(160px, 1fr)); }
+  .po-header h1{ font-size:20px }
+}
+
+@media (max-width: 480px){
+  .po-grid{ grid-template-columns: 1fr }
+  .po-value{ font-size:34px }
+  .po-header{ padding:12px }
+  .po-header h1{ font-size:18px }
+}

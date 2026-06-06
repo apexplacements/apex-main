@@ -27,6 +27,13 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// Debug: log all incoming requests (temporary)
+app.use((req, res, next) => {
+  try {
+    console.log(`INCOMING ${req.method} ${req.path}`);
+  } catch (e) {}
+  next();
+});
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 //Registration Route
@@ -111,14 +118,30 @@ app.use(
 );
 
 app.use(
+  "/api/offers",
+  require("./routes/offers")
+);
+
+app.use(
+  "/api/mock-interviews",
+  require("./routes/mockInterviews")
+);
+
+app.use(
+  "/api/placed-students",
+  require("./routes/placedStudents")
+);
+
+app.use(
+  "/api/placement-reports",
+  require("./routes/placementReports")
+);
+
+app.use(
   "/api/payments",
   require("./routes/payments")
 );
 
-app.use(
-  "/api",
-  require("./routes/clientEnquiries")
-);
 
 // ============================================
 // LMS ROUTES - TRAINER & STUDENT
@@ -133,16 +156,74 @@ app.use(
   require("./routes/studentRoutes")
 );
 
+// Mount client enquiries after specific API routes so it doesn't shadow them
+app.use(
+  "/api",
+  require("./routes/clientEnquiries")
+);
+
 app.get("/health", (req, res) => {
   res.json({
     success: true,
   });
 });
 
+// Debug: list registered routes (temporary)
+app.get("/debug/routes", (req, res) => {
+  try {
+    const routes = [];
+    const stack = (app._router && app._router.stack) || [];
+    stack.forEach((middleware) => {
+      if (middleware.route) {
+        // routes registered directly on the app
+        routes.push(middleware.route.path);
+      } else if (middleware.name === "router" && middleware.handle && middleware.handle.stack) {
+        middleware.handle.stack.forEach(function (handler) {
+          const route = handler.route;
+          route && routes.push(route.path ? `${middleware.regexp} -> ${route.path}` : route.path);
+        });
+      }
+    });
+    res.json({ success: true, routes });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 
+// Debug: print registered routes to console
+  try {
+    console.log('Registered app routes:');
+    const stack = (app._router && app._router.stack) || [];
+    stack.forEach((middleware) => {
+      try {
+        if (middleware.route) {
+          const methods = Object.keys(middleware.route.methods).join(',');
+          console.log(`${middleware.route.path} -> [${methods}]`);
+        } else if (middleware.name === 'router' && middleware.handle && Array.isArray(middleware.handle.stack)) {
+          middleware.handle.stack.forEach(function (handler) {
+            try {
+              const route = handler.route;
+              if (route) {
+                const methods = Object.keys(route.methods).join(',');
+                console.log(`${route.path} -> [${methods}] (in router ${middleware.regexp})`);
+              }
+            } catch (innerErr) {
+              console.error('Inner route error:', innerErr);
+            }
+          });
+        } else {
+          console.log('Middleware:', middleware.name || '<anonymous>', middleware.regexp || '');
+        }
+      } catch (mwErr) {
+        console.error('Middleware iteration error:', mwErr);
+      }
+    });
+  } catch (err) {
+    console.error('Error listing routes:', err);
+  }
+
 app.listen(PORT, () => {
-  console.log(
-    `Server running on port ${PORT}`
-  );
+  console.log(`Server running on port ${PORT}`);
 });

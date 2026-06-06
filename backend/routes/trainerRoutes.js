@@ -1,6 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
+console.log('Loaded trainerRoutes');
+
+// Debug: log incoming requests to this router
+router.use((req, res, next) => {
+  try {
+    console.log(`trainerRoutes: ${req.method} ${req.originalUrl || req.url}`);
+  } catch (e) {}
+  next();
+});
 
 // ============================================
 // TRAINER PROFILE ROUTES
@@ -19,6 +28,7 @@ router.get("/profile/:trainerId", async (req, res) => {
     );
 
     if (!trainer.length) {
+      console.warn(`Trainer profile not found for id=${trainerId}`);
       return res.status(404).json({ success: false, message: "Trainer not found" });
     }
 
@@ -26,6 +36,30 @@ router.get("/profile/:trainerId", async (req, res) => {
   } catch (err) {
     console.error("Error fetching trainer profile:", err);
     res.status(500).json({ success: false, message: "Error fetching profile" });
+  }
+});
+
+// Get trainer by user id (maps application user -> trainer record)
+router.get("/by-user/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const [rows] = await db.query(
+      `SELECT id, user_id, trainer_name, email, mobile, experience_years, 
+              specialization, bio, photo_url, certification, is_active 
+       FROM trainers WHERE user_id = ?`,
+      [userId]
+    );
+
+    if (!rows.length) {
+      console.warn(`Trainer not found for user_id=${userId}`);
+      return res.status(404).json({ success: false, message: "Trainer not found for user" });
+    }
+
+    res.json({ success: true, data: rows[0] });
+  } catch (err) {
+    console.error("Error fetching trainer by user:", err);
+    res.status(500).json({ success: false, message: "Error fetching trainer" });
   }
 });
 
