@@ -57,7 +57,6 @@ router.post("/", async (req, res) => {
 
     if (generatedRows.length) {
       const entry = generatedRows[0];
-      const entry = generatedRows[0];
       const correctPassword = entry.password || entry.default_password;
 
       if (correctPassword !== password) {
