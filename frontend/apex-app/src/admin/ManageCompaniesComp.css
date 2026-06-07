@@ -1,0 +1,305 @@
+/* ===========================
+   COMPANY MANAGEMENT
+=========================== */
+
+.companies-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Header */
+
+.companies-header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.companies-header h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* ===========================
+   ADD COMPANY FORM
+=========================== */
+
+.companies-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.companies-actions form {
+  width: 100%;
+  max-width: 500px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 15px;
+
+  background: #ffffff;
+
+  padding: 25px;
+
+  border-radius: 12px;
+
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.companies-actions input {
+  width: 100%;
+
+  padding: 14px 16px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition: all 0.3s ease;
+}
+
+.companies-actions input:focus {
+  border-color: #2563eb;
+
+  box-shadow: 0 0 8px rgba(37,99,235,0.2);
+}
+
+/* Button below input */
+
+.add-btn {
+  width: 100%;
+
+  padding: 14px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.add-btn:hover {
+  background: #1d4ed8;
+}
+
+/* ===========================
+   SEARCH SECTION
+=========================== */
+
+.search-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.search-section input {
+  width: 100%;
+  max-width: 500px;
+
+  padding: 14px 16px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition: all 0.3s ease;
+
+  background: #fff;
+}
+
+.search-section input:focus {
+  border-color: #2563eb;
+
+  box-shadow: 0 0 8px rgba(37,99,235,0.2);
+}
+
+/* ===========================
+   TABLE
+=========================== */
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+
+  background: #ffffff;
+
+  border-radius: 12px;
+
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+/* Header */
+
+.table-container th {
+  background: #0f172a;
+
+  color: #fff;
+
+  padding: 14px;
+
+  text-align: center;
+
+  font-size: 15px;
+}
+
+/* Body */
+
+.table-container td {
+  padding: 14px;
+
+  text-align: center;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  font-size: 14px;
+}
+
+.table-container tr:hover {
+  background: #f8fafc;
+}
+
+/* ===========================
+   ACTION BUTTONS
+=========================== */
+
+.edit-btn,
+.delete-btn {
+  padding: 8px 14px;
+
+  border: none;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  margin: 2px;
+}
+
+.edit-btn {
+  background: #f59e0b;
+  color: #fff;
+}
+
+.edit-btn:hover {
+  background: #d97706;
+}
+
+.delete-btn {
+  background: #dc2626;
+  color: #fff;
+}
+
+.delete-btn:hover {
+  background: #b91c1c;
+}
+
+/* ===========================
+   TABLE ACTION COLUMN
+=========================== */
+
+td:last-child {
+  white-space: nowrap;
+}
+
+/* ===========================
+   TABLET
+=========================== */
+
+@media (max-width: 768px) {
+
+  .companies-container {
+    padding: 15px;
+  }
+
+  .companies-header h2 {
+    font-size: 26px;
+  }
+
+  .companies-actions form {
+    padding: 20px;
+  }
+
+  .companies-actions input,
+  .search-section input {
+    font-size: 14px;
+  }
+
+  .add-btn {
+    font-size: 14px;
+  }
+
+  .table-container table {
+    min-width: 650px;
+  }
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width: 480px) {
+
+  .companies-header h2 {
+    font-size: 22px;
+  }
+
+  .companies-actions form {
+    padding: 15px;
+  }
+
+  .companies-actions input,
+  .search-section input {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .add-btn {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .table-container th,
+  .table-container td {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    width: 100%;
+    margin: 3px 0;
+  }
+}

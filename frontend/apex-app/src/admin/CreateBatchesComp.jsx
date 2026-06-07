@@ -63,7 +63,7 @@ const createBatch = async (e) => {
   // Sidebar menu items
   const menuItems = [
     { name: "Dashboard", path: "/dashboard" },
-    { name: "Manage Users", path: "/manage-users" },
+    { name: "Manage Companies", path: "/manage-companies" },
     { name: "Manage Students", path: "/manage-students" },
     { name: "Manage Customers", path: "/manage-customers" },
     { name: "Create New Batches", path: "/create-batches" },

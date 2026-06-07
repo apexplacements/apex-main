@@ -13,7 +13,7 @@ const PlacementStudentsComp = lazy(() => import("./placementcell/PlacementStuden
 const PlacementDrivesCellComp = lazy(() => import("./placementcell/PlacementDrivesComp"));
 const CompaniesComp = lazy(() => import("./placementcell/CompaniesComp"));
 const PlacementReportsComp = lazy(() => import("./placementcell/PlacementReportsComp"));
-const ManageUsersComp = lazy(() => import("./admin/ManageUsersComp"));
+const ManageCompaniesComp = lazy(() => import("./admin/ManageCompaniesComp"));
 const ManageStudentsComp = lazy(() => import("./admin/ManageStudentsComp"));
 const ManageCustomersComp = lazy(() => import("./admin/ManageCustomersComp"));
 const PlacementDrivesComp = lazy(() => import("./admin/PlacementDrivesComp"));
@@ -70,8 +70,8 @@ function App() {
         <Route path="/trainer" element={<LmsTrainerDashboard />} />
         <Route path="/student" element={<LmsStudentDashboard />} />
         <Route path="/placement" element={<PlacementOfficerDashboardComp />} />
-        <Route path="/manage-users" element={<ManageUsersComp />} />
-        <Route path="/admin/manage-users" element={<ManageUsersComp />} />
+        <Route path="/manage-companies" element={<ManageCompaniesComp />} />
+        <Route path="/admin/manage-companies" element={<ManageCompaniesComp />} />
         <Route path="/manage-students" element={<ManageStudentsComp />} />
         <Route path="/admin/manage-students" element={<ManageStudentsComp />} />
         <Route path="/manage-customers" element={<ManageCustomersComp />} />

@@ -1,0 +1,6 @@
+# pack-refs with: peeled fully-peeled sorted 
+56ad1138865dc55379d62962c71a7ff81651a019 refs/heads/feature/initial
+680d6fb19a85d9e00a68994e1f719c02e8a2a452 refs/heads/feature/placement-dashboard-fix
+53782914dcdcce24964bb0ef1ea7fe6d9305f8a6 refs/heads/fix/normalize-login-role
+1da60fce9fe22b5b78a926fe999bfa87210b34c5 refs/heads/main
+680d6fb19a85d9e00a68994e1f719c02e8a2a452 refs/pull/1/head

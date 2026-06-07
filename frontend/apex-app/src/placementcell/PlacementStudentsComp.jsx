@@ -1,36 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import api from '../apiClient';
 
 export default function PlacementStudentsComp(){
-  // Placeholder table; will wire search/filter and API
-  const students = [
-    {id:1,name:'Alice',email:'alice@example.com',phone:'9000000000',course:'Full Stack',batch:'Feb 2026',status:'Shortlisted'},
-    {id:2,name:'Bob',email:'bob@example.com',phone:'9000000001',course:'Data Science',batch:'Mar 2026',status:'Pending'},
-  ];
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let mounted = true;
+    
+    const fetchStudents = async () => {
+      try {
+        const response = await api.get('/students');
+        if (mounted && response.data && response.data.data) {
+          setStudents(response.data.data);
+        }
+      } catch (err) {
+        console.error('Error fetching students:', err);
+        if (mounted) setError('Failed to load students');
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+    
+    fetchStudents();
+    return () => { mounted = false; };
+  }, []);
 
   return (
     <div style={{padding:16}}>
-      <h2>Students</h2>
-      <div style={{overflowX:'auto'}}>
-        <table className="table">
-          <thead>
-            <tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Course</th><th>Batch</th><th>Status</th><th>Actions</th></tr>
-          </thead>
-          <tbody>
-            {students.map(s=> (
-              <tr key={s.id}>
-                <td>{s.id}</td>
-                <td>{s.name}</td>
-                <td>{s.email}</td>
-                <td>{s.phone}</td>
-                <td>{s.course}</td>
-                <td>{s.batch}</td>
-                <td>{s.status}</td>
-                <td><button className="btn btn-sm">View</button> <button className="btn btn-sm">Shortlist</button></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <h2>Students for Placement</h2>
+      {error && <div style={{color:'red',marginBottom:12}}>{error}</div>}
+      {loading ? (
+        <div>Loading students...</div>
+      ) : (
+        <div style={{overflowX:'auto'}}>
+          <table className="table">
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Course</th><th>Batch</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              {students.length > 0 ? students.map(s=> (
+                <tr key={s.id}>
+                  <td>{s.id}</td>
+                  <td>{s.name || s.student_name || 'N/A'}</td>
+                  <td>{s.email}</td>
+                  <td>{s.phone}</td>
+                  <td>{s.course || 'N/A'}</td>
+                  <td>{s.batch || 'N/A'}</td>
+                  <td><button className="btn btn-sm" onClick={() => alert('View: ' + (s.name || s.student_name))}>View</button></td>
+                </tr>
+              )) : (
+                <tr><td colSpan="7" style={{textAlign:'center'}}>No students found</td></tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
