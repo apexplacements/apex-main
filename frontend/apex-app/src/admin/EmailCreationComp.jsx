@@ -30,9 +30,16 @@ const EmailCreationComp = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await apiClient.get("/api/email-creation/users");
+      // Fetch users from student_enquiry so the select uses full_name
+      const res = await apiClient.get("/api/student-enquiry?perPage=1000");
       if (res.data && res.data.data) {
-        setUsers(res.data.data);
+        // Map full_name -> name to keep downstream code unchanged
+        const mapped = res.data.data.map((u) => ({
+          id: u.id,
+          name: u.full_name || u.name || "",
+          email: u.email || "",
+        }));
+        setUsers(mapped);
       }
     } catch (err) {
       console.error("Failed to load users", err);
@@ -82,18 +89,24 @@ const EmailCreationComp = () => {
     }
 
     try {
-      const res = await apiClient.post("/api/email-creation", {
-        userId: selectedUserId,
-        roles: selectedRoles,
-      });
+      const payload = { userId: Number(selectedUserId), roles: selectedRoles };
+      console.log("[email-creation] POST payload:", payload);
+      const res = await apiClient.post("/api/email-creation", payload);
 
       if (res.data && res.data.data) {
         setGeneratedEmails(res.data.data);
         setStatusMessage("Email addresses generated successfully.");
       }
     } catch (err) {
+      // Show detailed error for debugging (status + server message if available)
+      const status = err?.response?.status;
+      const serverMsg = err?.response?.data || err?.message;
       console.error("Failed to generate emails", err);
-      setStatusMessage("Failed to generate emails.");
+      setStatusMessage(
+        `Failed to generate emails${status ? ` (HTTP ${status})` : ''}: ${
+          typeof serverMsg === 'string' ? serverMsg : JSON.stringify(serverMsg)
+        }`
+      );
     }
   };
 
@@ -121,8 +134,7 @@ const EmailCreationComp = () => {
     { name: "Manage Trainers", path: "/manage-trainers" },
     { name: "Placement Drives", path: "/placement-drives" },
     { name: "View Reports", path: "/view-reports" },
-    { name: "Settings", path: "/settings" },
-    { name: "Audit Logs", path: "/audit-logs" },
+    
     { name: "Notifications", path: "/notifications" },
     { name: "Email Creation", path: "/email-creation" },
     { name: "Identity Management", path: "/identity-management" }

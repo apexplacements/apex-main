@@ -44,9 +44,12 @@ app.use("/api/register", register);
 app.use("/api/login", require("./routes/login"));
 
 app.use(
-  "/api/userrequests",
-  require("./routes/userRequests")
+  "/api/student-enquiry",
+  require("./routes/studentEnquiry")
 );
+
+// Keep old path for backward compatibility
+// Removed backward-compatible mount for /api/userrequests (now deprecated)
 
 app.use(
   "/api/batches",
@@ -141,6 +144,12 @@ app.use(
 app.use(
   "/api/payments",
   require("./routes/payments")
+);
+
+// Development/admin reports (runs local checks)
+app.use(
+  "/api/admin/reports",
+  require("./routes/adminReports")
 );
 
 
@@ -242,6 +251,14 @@ app.get("/api/dashboard/stats", async (req, res) => {
   }
 });
 
+// Export app for testing (when required as a module) while preserving direct run behavior
+module.exports = app;
+
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
 // Mount client enquiries after specific API routes so it doesn't shadow them
 app.use(
   "/api",
@@ -276,8 +293,6 @@ app.get("/debug/routes", (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 5000;
-
 // Debug: print registered routes to console
   try {
     console.log('Registered app routes:');
@@ -310,6 +325,4 @@ const PORT = process.env.PORT || 5000;
     console.error('Error listing routes:', err);
   }
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Note: server listen is handled in the module entry point (if require.main === module)

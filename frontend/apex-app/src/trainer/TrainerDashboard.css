@@ -158,6 +158,11 @@
   transition: 0.3s;
 }
 
+/* Prevent body scroll when sidebar is open on small screens */
+body.no-scroll {
+  overflow: hidden !important;
+}
+
 .content-header {
   background: white;
   padding: 18px 25px;

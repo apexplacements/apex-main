@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./DashboardComp.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import apiClient from "../apiClient";
+import { setSiteSummaryCache } from "../hooks/useSiteSummary";
+import { isAdmin } from "../utils/auth";
 
 const DashboardComp = () => {
   const navigate = useNavigate();
@@ -70,6 +72,8 @@ const DashboardComp = () => {
       if (res.data.success) {
         console.log("[DASHBOARD] Stats loaded:", res.data.data);
         setDashboardData(res.data.data);
+        // populate shared hook cache so other dashboards use the same source-of-truth
+        try { setSiteSummaryCache(res.data.data?.summary || null); } catch (e) {}
       } else {
         setDashboardData({
           summary: {},
@@ -78,6 +82,7 @@ const DashboardComp = () => {
           recent_students: [],
           active_batches: []
         });
+        try { setSiteSummaryCache({}); } catch(e) {}
       }
     } catch (err) {
       console.error("[DASHBOARD] Fetch error:", err.message);
@@ -88,6 +93,7 @@ const DashboardComp = () => {
         recent_students: [],
         active_batches: []
       });
+      try { setSiteSummaryCache({}); } catch(e) {}
     } finally {
       setLoading(false);
     }
@@ -103,9 +109,11 @@ const DashboardComp = () => {
     { name: "Manage Courses", path: "/manage-courses" },
     { name: "Manage Trainers", path: "/manage-trainers" },
     { name: "Placement Drives", path: "/placement-drives" },
+    { name: "Placement Students", path: "/placement-students" },
+    { name: "Placement Companies", path: "/companies" },
     { name: "View Reports", path: "/view-reports" },
-    { name: "Settings", path: "/settings" },
-    { name: "Audit Logs", path: "/audit-logs" },
+    { name: "Placement Reports", path: "/placement-reports" },
+    
     { name: "Notifications", path: "/notifications" },
     { name: "Email Creation", path: "/email-creation" },
     { name: "Identity Management", path: "/identity-management" }
@@ -139,13 +147,15 @@ const DashboardComp = () => {
       </header>
 
       <div className="main-layout">
-        <aside className={`sidebar-menu ${menuOpen ? "show" : ""}`}>
-          {menuItems.map((item) => (
-            <NavLink key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
-              {item.name}
-            </NavLink>
-          ))}
-        </aside>
+        {isAdmin() && (
+          <aside className={`sidebar-menu ${menuOpen ? "show" : ""}`}>
+            {menuItems.map((item) => (
+              <NavLink key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
+                {item.name}
+              </NavLink>
+            ))}
+          </aside>
+        )}
 
         <main className="dashboard-content">
           <div style={{ marginBottom: "30px" }}>

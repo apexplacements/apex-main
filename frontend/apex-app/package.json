@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "check:dashboards": "node scripts/checkDashboardConsistency.cjs",
+    "test": "vitest",
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "vite"
@@ -32,6 +34,9 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
-    "vite": "^8.0.16"
+    "vite": "^8.0.16",
+    "vitest": "^1.4.5",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/jest-dom": "^6.0.0"
   }
 }

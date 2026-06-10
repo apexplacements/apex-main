@@ -13,6 +13,7 @@ const PlacementStudentsComp = lazy(() => import("./placementcell/PlacementStuden
 const PlacementDrivesCellComp = lazy(() => import("./placementcell/PlacementDrivesComp"));
 const CompaniesComp = lazy(() => import("./placementcell/CompaniesComp"));
 const PlacementReportsComp = lazy(() => import("./placementcell/PlacementReportsComp"));
+const PlacementInterviewsComp = lazy(() => import("./placementcell/InterviewsComp"));
 const ManageCompaniesComp = lazy(() => import("./admin/ManageCompaniesComp"));
 const ManageStudentsComp = lazy(() => import("./admin/ManageStudentsComp"));
 const ManageCustomersComp = lazy(() => import("./admin/ManageCustomersComp"));
@@ -22,8 +23,6 @@ const UploadDataComp = lazy(() => import("./admin/UploadDataComp"));
 const ManageCoursesComp = lazy(() => import("./admin/ManageCoursesComp"));
 const ManageTrainersComp = lazy(() => import("./admin/ManageTrainersComp"));
 const ViewReportsComp = lazy(() => import("./admin/ViewReportsComp"));
-const SettingsComp = lazy(() => import("./admin/SettingsComp"));
-const AuditLogsComp = lazy(() => import("./admin/AuditLogsComp"));
 const NotificationsComp = lazy(() => import("./admin/NotificationsComp"));
 const EmailCreationComp = lazy(() => import("./admin/EmailCreationComp"));
 const IdentityManagementComp = lazy(() => import("./admin/IdentityManagementComp"));
@@ -63,9 +62,15 @@ function App() {
         <Route path="/placement-dashboard" element={<PlacementOfficerDashboardComp />} />
         <Route path="/placement/dashboard" element={<PlacementOfficerDashboardComp />} />
         <Route path="/placement-students" element={<PlacementStudentsComp />} />
+        <Route path="/interviews" element={<PlacementInterviewsComp />} />
         <Route path="/placement/drives" element={<PlacementDrivesCellComp />} />
+        <Route path="/placement/interviews" element={<PlacementInterviewsComp />} />
         <Route path="/companies" element={<CompaniesComp />} />
         <Route path="/placement-reports" element={<PlacementReportsComp />} />
+        <Route path="/admin/placement-students" element={<PlacementStudentsComp />} />
+        <Route path="/admin/placement/drives" element={<PlacementDrivesCellComp />} />
+        <Route path="/admin/companies" element={<CompaniesComp />} />
+        <Route path="/admin/placement-reports" element={<PlacementReportsComp />} />
         <Route path="/hr" element={<HrDashboard />} />
         <Route path="/trainer" element={<LmsTrainerDashboard />} />
         <Route path="/student" element={<LmsStudentDashboard />} />
@@ -89,10 +94,7 @@ function App() {
         <Route path="/jobs" element={<PlacementDrivesCellComp />} />
         <Route path="/view-reports" element={<ViewReportsComp />} />
         <Route path="/admin/view-reports" element={<ViewReportsComp />} />
-        <Route path="/settings" element={<SettingsComp />} />
-        <Route path="/admin/settings" element={<SettingsComp />} />
-        <Route path="/audit-logs" element={<AuditLogsComp />} />
-        <Route path="/admin/audit-logs" element={<AuditLogsComp />} />
+        {/* Settings and Audit Logs removed */}
         <Route path="/notifications" element={<NotificationsComp />} />
         <Route path="/admin/notifications" element={<NotificationsComp />} />
         <Route path="/email-creation" element={<EmailCreationComp />} />

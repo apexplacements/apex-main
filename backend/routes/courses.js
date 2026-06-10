@@ -14,6 +14,8 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  const { course_name, duration, fee, trainer_name, description, image_url, course_type } = req.body;
+
   await db.query(
     `
     INSERT INTO courses
@@ -23,11 +25,12 @@ router.post("/", async (req, res) => {
       fee,
       trainer_name,
       description,
-      image_url
+      image_url,
+      course_type
     )
-    VALUES (?,?,?,?,?,?)
+    VALUES (?,?,?,?,?,?,?)
   `,
-    Object.values(req.body)
+    [course_name, duration, fee, trainer_name, description, image_url, course_type]
   );
 
   res.json({
@@ -36,14 +39,7 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  const {
-    course_name,
-    duration,
-    fee,
-    trainer_name,
-    description,
-    image_url,
-  } = req.body;
+  const { course_name, duration, fee, trainer_name, description, image_url, course_type } = req.body;
 
   await db.query(
     `
@@ -54,7 +50,8 @@ router.put("/:id", async (req, res) => {
       fee=?,
       trainer_name=?,
       description=?,
-      image_url=?
+      image_url=?,
+      course_type=?
     WHERE id=?
   `,
     [
@@ -64,6 +61,7 @@ router.put("/:id", async (req, res) => {
       trainer_name,
       description,
       image_url,
+      course_type,
       req.params.id,
     ]
   );

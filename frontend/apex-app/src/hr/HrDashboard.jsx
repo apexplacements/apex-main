@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../apiClient";
+import useSiteSummary from "../hooks/useSiteSummary";
 import HrSummaryCard from "./HrSummaryCard";
 import "./HrDashboard.css";
 
@@ -48,6 +49,8 @@ const HrDashboard = () => {
     companiesHiring: 0,
   });
 
+  const { summary: siteSummary } = useSiteSummary();
+
   const sections = [
     { key: "dashboard", label: "Dashboard" },
     { key: "students", label: "Students" },
@@ -67,6 +70,18 @@ const HrDashboard = () => {
   useEffect(() => {
     loadAllData();
   }, []);
+
+  useEffect(() => {
+    if (!siteSummary) return;
+    setStats((prev) => ({
+      totalStudents: siteSummary.total_students || prev.totalStudents,
+      eligibleStudents: siteSummary.total_students ? (siteSummary.total_students - (siteSummary.total_placements || 0)) : prev.eligibleStudents,
+      placedStudents: siteSummary.total_placements || prev.placedStudents,
+      activeJobOpenings: siteSummary.total_jobs || prev.activeJobOpenings,
+      scheduledInterviews: siteSummary.total_interviews || prev.scheduledInterviews,
+      companiesHiring: siteSummary.total_companies || prev.companiesHiring,
+    }));
+  }, [siteSummary]);
 
   const loadAllData = async () => {
     setLoading(true);
@@ -121,6 +136,8 @@ const HrDashboard = () => {
         scheduledInterviews,
         companiesHiring: hiringCompanies,
       });
+
+      // stats set above; if siteSummary is available a separate effect will sync it
     } catch (err) {
       console.error(err);
       setError("Unable to load HR portal data.");

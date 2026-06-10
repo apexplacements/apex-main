@@ -8,6 +8,7 @@ function CandidateEnquiryComp() {
     full_name: "",
     phone: "",
     email: "",
+    job_type: "",
     career_option: ""
   });
 
@@ -16,9 +17,21 @@ function CandidateEnquiryComp() {
 
   const handleChange = (e) => {
 
+    const { name, value } = e.target;
+
+    // If job_type changes, reset career_option
+    if (name === 'job_type') {
+      setFormData({
+        ...formData,
+        job_type: value,
+        career_option: ''
+      });
+      return;
+    }
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
 
   };
@@ -39,7 +52,7 @@ function CandidateEnquiryComp() {
     try {
 
       const response = await apiClient.post(
-        "/api/userrequests",
+        "/api/student-enquiry",
         formData
       );
 
@@ -142,47 +155,47 @@ function CandidateEnquiryComp() {
               required
             />
 
-            {/* COURSE */}
+            {/* INDUSTRY TYPE */}
             <label>
-              Choose Your Career Option
+              Looking For
+            </label>
+            <select name="job_type" value={formData.job_type} onChange={handleChange}>
+              <option value="">--- Select type of industry ---</option>
+              <option value="IT">IT</option>
+              <option value="Non-IT">Non-IT</option>
+            </select>
+
+            {/* CAREER OPTIONS - shown based on job_type */}
+            <label>
+              Career Option
             </label>
 
-       <select
-         name="career_option"
-         value={formData.career_option}
-         onChange={handleChange}
-        >
+            {formData.job_type === 'IT' && (
+              <select name="career_option" value={formData.career_option} onChange={handleChange} required>
+                <option value="">--- Select Career Option ---</option>
+                <option value="Java Fullstack">Java Fullstack</option>
+                <option value="Python Fullstack">Python Fullstack</option>
+                <option value="MERN Stack">MERN Stack</option>
+                <option value="Data Science">Data Science</option>
+                <option value="Dotnet Fullstack">Dotnet Fullstack</option>
+                <option value="Angular">Angular</option>
+                <option value="Machine Learning">Machine Learning</option>
+              </select>
+            )}
 
-        <option value="">
-        --- Select Career Option ---
-        </option>
-
-        <option value="Java Fullstack">
-        Java Fullstack
-        </option>
-
-        <option value="Python Fullstack">
-        Python Fullstack
-        </option>
-
-        <option value="MERN Stack">
-         MERN Stack
-        </option>
-
-        <option value="Data Science">
-        Data Science
-        </option>
-        <option value="Dotnet Fullstack">
-        Dotnet Fullstack
-        </option>
-        <option value="Angular">
-        Angular
-        </option>
-        <option value="Machine Learning">
-        Machine Learning
-        </option>
-
-      </select>
+            {formData.job_type === 'Non-IT' && (
+              <select name="career_option" value={formData.career_option} onChange={handleChange} required>
+                <option value="">--- Select Career Option ---</option>
+                <option value="Content Moderator">Content Moderator</option>
+                <option value="Fraud Analyst">Fraud Analyst</option>
+                <option value="HR Executive">HR Executive</option>
+                <option value="Google Maps">Google Maps</option>
+                <option value="Voice Process">Voice Process</option>
+                <option value="Non Voice Process - Chat/Email process">Non Voice Process - Chat/Email process</option>
+                <option value="Non Voice Process - Data Entry">Non Voice Process - Data Entry</option>
+                <option value="Medical Billing">Medical Billing</option>
+              </select>
+            )}
 
 
             {/* BUTTON */}

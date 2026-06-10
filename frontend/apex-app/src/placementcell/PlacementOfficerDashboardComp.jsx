@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import api from '../apiClient';
+import useSiteSummary from '../hooks/useSiteSummary';
 import { Link, useNavigate } from 'react-router-dom';
 import './PlacementOfficerStyles.css';
+import PlacementLayout from './PlacementLayout';
 
 const StatCard = ({label, value}) => (
   <div className="po-card">
@@ -59,21 +61,25 @@ export default function PlacementOfficerDashboardComp(){
     return ()=> mounted=false;
   },[]);
 
+  
+
+  const { summary: siteSummary } = useSiteSummary();
+
+  React.useEffect(() => {
+    if (!siteSummary) return;
+    setStats((prev) => {
+      const total = siteSummary.total_students || prev.totalStudents;
+      const placed = siteSummary.total_placements || prev.placedStudents;
+      const companiesCount = siteSummary.total_companies || prev.companies;
+      const interviewsCount = siteSummary.total_interviews || prev.interviewsScheduled;
+      const offersCount = siteSummary.total_offers || prev.offersReleased;
+      const percent = total ? Math.round((placed/total)*100) + '%' : '0%';
+      return { totalStudents: total, placedStudents: placed, activeDrives: prev.activeDrives, companies: companiesCount, interviewsScheduled: interviewsCount, offersReleased: offersCount, placementPercent: percent };
+    });
+  }, [siteSummary]);
+
   return (
-    <div className="po-container">
-      <header className="po-header">
-  <div style={{ width: "60px" }}>
-    <button className="po-menu-btn">☰</button>
-  </div>
-
-  <h1>Placement Officer Dashboard</h1>
-
-  <div style={{ width: "100px", textAlign: "right" }}>
-    <button className="po-logout-btn" onClick={handleLogout}>
-      Logout
-    </button>
-  </div>
-</header>
+    <PlacementLayout title="Placement Officer Dashboard">
       <div className="po-grid">
         <StatCard label="Total Students" value={stats.totalStudents} />
         <StatCard label="Placed Students" value={stats.placedStudents} />
@@ -83,15 +89,6 @@ export default function PlacementOfficerDashboardComp(){
         <StatCard label="Offers Released" value={stats.offersReleased} />
         <StatCard label="Placement Percentage" value={stats.placementPercent} />
       </div>
-
-      <div className="po-actions">
-        <Link to="/placement-students" className="po-btn">Students</Link>
-        <Link to="/placement/drives" className="po-btn">Placement Drives</Link>
-        <Link to="/companies" className="po-btn">Companies</Link>
-        <Link to="/interviews" className="po-btn">Interviews</Link>
-        <Link to="/jobs" className="po-btn">Job Postings</Link>
-        <Link to="/placement-reports" className="po-btn">Reports</Link>
-      </div>
-    </div>
+    </PlacementLayout>
   );
 }

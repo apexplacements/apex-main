@@ -196,4 +196,28 @@ router.post("/batches", async (req, res) => {
   }
 });
 
+// Support updating and deleting batches here as well to avoid routing order issues
+router.put('/batches/:id', async (req, res) => {
+  try {
+    const { course_name, trainer_name, start_date, end_date } = req.body;
+    const sql = `UPDATE batches SET course_name=?, trainer_name=?, start_date=?, end_date=? WHERE id=?`;
+    const [result] = await pool.execute(sql, [course_name, trainer_name, start_date, end_date, req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('[clientEnquiries] PUT /batches/:id error', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+router.delete('/batches/:id', async (req, res) => {
+  try {
+    const sql = `DELETE FROM batches WHERE id=?`;
+    const [result] = await pool.execute(sql, [req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('[clientEnquiries] DELETE /batches/:id error', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 module.exports = router;

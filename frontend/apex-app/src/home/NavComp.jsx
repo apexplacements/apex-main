@@ -99,7 +99,7 @@ useEffect(() => {
           {/* Dropdown */}
           <div className="nav-item dropdown">
 
-            Jobs
+            Activities
 
             <div className="dropdown-menu">
 

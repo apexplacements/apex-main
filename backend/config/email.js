@@ -15,15 +15,18 @@ if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
   });
 
   // Verify connection
-  transporter.verify((err, success) => {
-    if (err) {
-      console.error("⚠️  Email service error:", err.message);
-      console.error("📧 Email credentials validation failed. Admin credentials will NOT be sent to registered email.");
-    } else if (success) {
-      emailConfigured = true;
-      console.log("✓ Email service connected successfully");
-    }
-  });
+  // Verify connection (skip during tests to avoid open handles)
+  if (process.env.NODE_ENV !== 'test') {
+    transporter.verify((err, success) => {
+      if (err) {
+        console.error("⚠️  Email service error:", err.message);
+        console.error("📧 Email credentials validation failed. Admin credentials will NOT be sent to registered email.");
+      } else if (success) {
+        emailConfigured = true;
+        console.log("✓ Email service connected successfully");
+      }
+    });
+  }
 }
 
 const sendAdminCredentials = async (adminEmail, generatedEmail, defaultPassword, adminName) => {
