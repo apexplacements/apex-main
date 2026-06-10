@@ -60,7 +60,9 @@ const TrainerProfileComp = ({ trainerId }) => {
       }
     } catch (err) {
       console.error("Error updating profile:", err);
-      alert("Failed to update profile");
+      const msg = err.response?.data?.message || err.message || "Failed to update profile";
+      // show inline alert if available and an alert popup
+      alert(msg);
     }
   };
 

@@ -62,10 +62,18 @@ export default function PlacementOfficerDashboardComp(){
   return (
     <div className="po-container">
       <header className="po-header">
-        <button className="po-menu-btn" aria-hidden>☰</button>
-        <h1>Placement Officer Dashboard</h1>
-        <button className="po-logout-btn" onClick={handleLogout}>Logout</button>
-      </header>
+  <div style={{ width: "60px" }}>
+    <button className="po-menu-btn">☰</button>
+  </div>
+
+  <h1>Placement Officer Dashboard</h1>
+
+  <div style={{ width: "100px", textAlign: "right" }}>
+    <button className="po-logout-btn" onClick={handleLogout}>
+      Logout
+    </button>
+  </div>
+</header>
       <div className="po-grid">
         <StatCard label="Total Students" value={stats.totalStudents} />
         <StatCard label="Placed Students" value={stats.placedStudents} />

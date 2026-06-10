@@ -1,0 +1,1 @@
+This is a temporary file created to test apply_patch tool.

@@ -1,50 +1,231 @@
-.po-container{
-  padding: 18px 22px;
-  background: #f6f9fb;
+/* ===========================
+   GLOBAL
+=========================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.po-container {
   min-height: 100vh;
+  background: #f4f7fc;
+  padding-bottom: 30px;
 }
-.po-header{
-  background: linear-gradient(90deg,#071028 0%, #07102a 55%, #061227 100%);
-  color: #fff;
-  border-radius: 12px;
-  padding: 14px 18px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom: 18px;
+
+/* ===========================
+   HEADER
+=========================== */
+
+.po-header {
+  height: 70px;
+  background: #0f172a;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 20px;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
 }
-.po-header h1{ margin:0; font-family: Georgia, 'Times New Roman', serif; font-size:24px; color:#2b66ff; letter-spacing:1px; text-transform:uppercase; font-weight:800 }
-.po-logout-btn{ background:#fff; color:#0f172a; padding:8px 14px; border-radius:12px; border:none; font-weight:700; box-shadow:0 8px 20px rgba(2,6,23,0.12); cursor:pointer }
-.po-grid{
+
+.po-menu-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  width: 50px;
+  text-align: left;
+}
+
+.po-header h1 {
+  flex: 1;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.po-logout-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.po-logout-btn:hover {
+  background: #b91c1c;
+}
+
+/* ===========================
+   STATISTICS GRID
+=========================== */
+
+.po-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(220px, 1fr));
-  gap: 18px;
-  margin-bottom: 18px;
-}
-.po-card{
-  background:#ffffff;
-  border-radius:20px;
-  padding:28px 20px;
-  text-align:center;
-  box-shadow: 0 24px 60px rgba(37,84,150,0.04);
-  border: 1px solid rgba(148,163,184,0.08);
-}
-.po-value{ font-size:44px; font-weight:900; color:#2b66ff; margin-bottom:8px }
-.po-label{ font-family: Georgia, 'Times New Roman', serif; font-size:18px; color:#0f172a; margin-top:6px }
-.po-actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:18px }
-.po-btn{ background: linear-gradient(180deg,#ffffff,#f8fbff); color:#0f172a; padding:12px 28px; border-radius:28px; text-decoration:none; border:1px solid rgba(37,84,150,0.06); font-weight:800; box-shadow: inset 0 -6px 18px rgba(43,102,255,0.03); font-family: Georgia, 'Times New Roman', serif; font-size:18px }
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 
-.po-btn:hover{ transform: translateY(-2px); box-shadow: 0 12px 30px rgba(37,84,150,0.08); }
-
-@media (max-width: 1024px){
-  .po-grid{ grid-template-columns: repeat(2, minmax(160px, 1fr)); }
-  .po-header h1{ font-size:20px }
+  padding: 25px;
 }
 
-@media (max-width: 480px){
-  .po-grid{ grid-template-columns: 1fr }
-  .po-value{ font-size:34px }
-  .po-header{ padding:12px }
-  .po-header h1{ font-size:18px }
+.po-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px 15px;
+
+  text-align: center;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+  transition: 0.3s ease;
+}
+
+.po-card:hover {
+  transform: translateY(-4px);
+}
+
+.po-value {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2563eb;
+  margin-bottom: 10px;
+}
+
+.po-label {
+  font-size: 15px;
+  color: #475569;
+  font-weight: 600;
+}
+
+/* ===========================
+   ACTION BUTTONS
+=========================== */
+
+.po-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 15px;
+  padding: 0 25px;
+}
+
+.po-btn {
+  background: #2563eb;
+  color: white;
+
+  text-decoration: none;
+  text-align: center;
+
+  padding: 14px;
+  border-radius: 10px;
+
+  font-weight: 600;
+
+  transition: 0.3s ease;
+}
+
+.po-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+/* ===========================
+   TABLET
+=========================== */
+
+@media (max-width: 1024px) {
+
+  .po-header h1 {
+    font-size: 22px;
+  }
+
+  .po-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width: 768px) {
+
+  .po-header {
+    padding: 0 12px;
+  }
+
+  .po-header h1 {
+    font-size: 18px;
+  }
+
+  .po-menu-btn {
+    font-size: 24px;
+  }
+
+  .po-logout-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .po-grid {
+    grid-template-columns: 1fr;
+    padding: 15px;
+  }
+
+  .po-actions {
+    grid-template-columns: 1fr;
+    padding: 0 15px;
+  }
+
+  .po-card {
+    padding: 20px;
+  }
+
+  .po-value {
+    font-size: 28px;
+  }
+}
+
+/* ===========================
+   SMALL MOBILE
+=========================== */
+
+@media (max-width: 480px) {
+
+  .po-header {
+    height: 60px;
+  }
+
+  .po-header h1 {
+    font-size: 16px;
+  }
+
+  .po-menu-btn {
+    width: 40px;
+    font-size: 22px;
+  }
+
+  .po-logout-btn {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+
+  .po-value {
+    font-size: 24px;
+  }
+
+  .po-label {
+    font-size: 14px;
+  }
 }

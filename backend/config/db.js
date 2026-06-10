@@ -22,7 +22,9 @@ const db = mysql.createPool({
   password: dbPassword,
   database: dbName,
   waitForConnections: true,
-  connectionLimit: Number(process.env.DB_CONN_LIMIT) || 10,
+  connectionLimit: Number(process.env.DB_CONN_LIMIT) || 2,
+  // Lower pool size during local debugging to avoid 'Too many connections'
+  // Use env DB_CONN_LIMIT to override in production.
   queueLimit: 0,
   ssl:
     process.env.DB_SSL === "true"

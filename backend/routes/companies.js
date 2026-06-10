@@ -13,9 +13,20 @@ const ensureCompaniesTable = async () => {
       hr_mobile VARCHAR(20),
       location VARCHAR(200),
       logo_url TEXT,
+      apply_link TEXT,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
   `);
+  
+  // Add apply_link column if it doesn't exist
+  try {
+    await db.query(`ALTER TABLE companies ADD COLUMN apply_link TEXT`);
+  } catch (err) {
+    // Column already exists, ignore error
+    if (err.code !== "ER_DUP_FIELDNAME") {
+      console.error("Error adding apply_link column:", err.message);
+    }
+  }
 };
 
 ensureCompaniesTable().catch((err) => {
@@ -32,6 +43,9 @@ router.get("/", async (req, res) => {
     res.status(500).json({ success: false, message: "Unable to fetch companies." });
   }
 });
+
+// Export for debugging
+module.exports.__debug = 'companies route loaded';
 
 // GET single company by ID
 router.get("/:id", async (req, res) => {
@@ -58,6 +72,7 @@ router.post("/", async (req, res) => {
       hr_mobile,
       location,
       logo_url,
+      apply_link,
     } = req.body;
 
     if (!company_name || company_name.trim() === "") {
@@ -65,8 +80,8 @@ router.post("/", async (req, res) => {
     }
 
     const [result] = await db.query(
-      `INSERT INTO companies (company_name, website, hr_name, hr_email, hr_mobile, location, logo_url)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO companies (company_name, website, hr_name, hr_email, hr_mobile, location, logo_url, apply_link)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         company_name,
         website || null,
@@ -75,6 +90,7 @@ router.post("/", async (req, res) => {
         hr_mobile || null,
         location || null,
         logo_url || null,
+        apply_link || null,
       ]
     );
 
@@ -97,10 +113,11 @@ router.put("/:id", async (req, res) => {
       hr_mobile,
       location,
       logo_url,
+      apply_link,
     } = req.body;
 
     const [result] = await db.query(
-      `UPDATE companies SET company_name=?, website=?, hr_name=?, hr_email=?, hr_mobile=?, location=?, logo_url=?
+      `UPDATE companies SET company_name=?, website=?, hr_name=?, hr_email=?, hr_mobile=?, location=?, logo_url=?, apply_link=?
        WHERE id=?`,
       [
         company_name || null,
@@ -110,6 +127,7 @@ router.put("/:id", async (req, res) => {
         hr_mobile || null,
         location || null,
         logo_url || null,
+        apply_link || null,
         req.params.id,
       ]
     );

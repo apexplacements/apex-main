@@ -17,9 +17,10 @@ const AttendanceMarkingComp = ({ trainerId }) => {
 
   const fetchBatches = async () => {
     try {
-      const res = await apiClient.get(`/api/lms/trainer/${trainerId}/batches`);
+      const res = await apiClient.get(`/api/batches`);
       if (res.data.success) {
-        setBatches(res.data.data);
+        const all = res.data.data || [];
+        setBatches(all.filter((b) => String(b.trainer_id) === String(trainerId)));
       }
     } catch (err) {
       console.error("Error fetching batches:", err);
@@ -66,7 +67,7 @@ const AttendanceMarkingComp = ({ trainerId }) => {
 
       const res = await apiClient.post(
         `/api/lms/trainer/${trainerId}/batches/${selectedBatch}/attendance`,
-        { attendance: attendanceData }
+        { attendance_data: attendanceData }
       );
 
       if (res.data.success) {
