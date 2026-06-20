@@ -9,6 +9,7 @@ const ensureNotificationsTable = async () => {
       title VARCHAR(255),
       message TEXT,
       notification_type VARCHAR(100),
+      recipients TEXT,
       student_id INT,
       company_id INT,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -19,6 +20,20 @@ const ensureNotificationsTable = async () => {
 ensureNotificationsTable().catch((err) => {
   console.error("Failed to initialize notifications table:", err);
 });
+
+// Ensure recipients column exists for older DBs
+(async () => {
+  try {
+    await db.query("ALTER TABLE notifications ADD COLUMN IF NOT EXISTS recipients TEXT");
+  } catch (e) {
+    // ignore - older MySQL may not support IF NOT EXISTS, or column may already exist
+    try {
+      await db.query("ALTER TABLE notifications ADD COLUMN recipients TEXT");
+    } catch (err) {
+      // ignore any error here
+    }
+  }
+})();
 
 router.get("/", async (req, res) => {
   try {
@@ -37,15 +52,18 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { title, message, notification_type, student_id, company_id } = req.body;
+    const { title, message, notification_type, student_id, company_id, recipients } = req.body;
+
+    const recipientsValue = Array.isArray(recipients) ? recipients.join(',') : (recipients || null);
 
     const [result] = await db.query(
-      `INSERT INTO notifications (title, message, notification_type, student_id, company_id)
-       VALUES (?, ?, ?, ?, ?)`,
+      `INSERT INTO notifications (title, message, notification_type, recipients, student_id, company_id)
+       VALUES (?, ?, ?, ?, ?, ?)`,
       [
         title || null,
         message || null,
         notification_type || null,
+        recipientsValue,
         student_id || null,
         company_id || null,
       ]

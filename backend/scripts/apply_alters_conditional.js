@@ -24,8 +24,12 @@ async function run(){
     } else console.log('courses.duration_hours exists');
 
     if (!(await columnExists('courses','difficulty_level'))){
-      await addColumn('courses","difficulty_level ENUM(\'Beginner\',\'Intermediate\',\'Advanced\') DEFAULT \'Beginner\'' );
+      await addColumn('courses', "difficulty_level ENUM('Beginner','Intermediate','Advanced') DEFAULT 'Beginner'");
     }
+
+    if (!(await columnExists('courses','course_type'))){
+      await addColumn('courses', "course_type VARCHAR(50)");
+    } else console.log('courses.course_type exists');
 
     // trainers columns
     const trainerCols = [

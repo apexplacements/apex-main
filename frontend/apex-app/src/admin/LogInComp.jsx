@@ -22,17 +22,15 @@ const LogInComp = () => {
   };
 
   const getRoleDashboard = (role) => {
-    const roleMap = {
-      admin: "/admin/dashboard",
-      hr: "/hr/dashboard",
-      trainer: "/trainer/dashboard",
-      student: "/student/dashboard",
-      std: "/student/dashboard",
-      tr: "/trainer/dashboard",
-      po: "/placement/dashboard",
-      others: "/home",
-    };
-    return roleMap[role?.toLowerCase()] || "/admin/dashboard";
+    if (!role) return "/admin/dashboard";
+    const r = String(role).toLowerCase();
+    if (r.includes("placement")) return "/placement/dashboard";
+    if (r === "po" || r === "placementofficer" || r === "placement officer") return "/placement/dashboard";
+    if (r === "admin") return "/admin/dashboard";
+    if (r === "hr") return "/hr/dashboard";
+    if (r === "trainer" || r === "tr") return "/trainer/dashboard";
+    if (r === "student" || r === "std") return "/student/dashboard";
+    return "/admin/dashboard";
   };
 
   const handleSubmit = async (e) => {
@@ -49,6 +47,8 @@ const LogInComp = () => {
 
       if (res.data && res.data.success) {
         const userData = res.data.data;
+
+        console.log('Login success role=', userData?.role, 'email=', userData?.email);
 
         // Persist user session
         sessionStorage.setItem("currentUser", JSON.stringify(userData));

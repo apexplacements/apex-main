@@ -2,6 +2,11 @@
   "name": "apexskills-backend",
   "private": true,
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jest --runInBand"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "supertest": "^6.3.0"
   }
 }

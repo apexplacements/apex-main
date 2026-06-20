@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import apiClient from "../apiClient";
+import useSiteSummary from "../hooks/useSiteSummary";
 import "./StudentDashboard.css";
 import MyCoursesComp from "./MyCoursesComp";
 import CoursePlayerComp from "./CoursePlayerComp";
@@ -19,6 +20,7 @@ const StudentDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { summary: siteSummary } = useSiteSummary();
 
   useEffect(() => {
     const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -32,6 +34,8 @@ const StudentDashboard = () => {
     setStudentData(currentUser);
     setLoading(false);
   }, [navigate]);
+
+  
 
   if (loading) {
     return <div className="student-dashboard-loading">Loading...</div>;
@@ -184,6 +188,14 @@ const StudentDashboard = () => {
               <span className="user-badge">{studentData?.role?.toUpperCase()}</span>
             </div>
           </div>
+          {siteSummary && (
+            <div style={{ margin: '12px 0', padding: '8px', background: '#fff', borderRadius: 6, display: 'flex', gap: 12 }}>
+              <div>Students: {siteSummary.total_students || 0}</div>
+              <div>Placements: {siteSummary.total_placements || 0}</div>
+              <div>Companies: {siteSummary.total_companies || 0}</div>
+              <div>Jobs: {siteSummary.total_jobs || 0}</div>
+            </div>
+          )}
 
           <div className="student-content-area">
             {renderContent()}

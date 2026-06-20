@@ -57,7 +57,7 @@ const UploadDataComp = () => {
 
   const menuItems = [
     { name: "Dashboard", path: "/dashboard" },
-    { name: "Manage Users", path: "/manage-users" },
+    { name: "Manage Companies", path: "/manage-companies" },
     { name: "Manage Students", path: "/manage-students" },
     { name: "Manage Customers", path: "/manage-customers" },
     { name: "Create New Batches", path: "/create-batches" },
@@ -66,8 +66,6 @@ const UploadDataComp = () => {
     { name: "Manage Trainers", path: "/manage-trainers" },
     { name: "Placement Drives", path: "/placement-drives" },
     { name: "View Reports", path: "/view-reports" },
-    { name: "Settings", path: "/settings" },
-    { name: "Audit Logs", path: "/audit-logs" },
     { name: "Notifications", path: "/notifications" },
     { name: "Email Creation", path: "/email-creation" },
     { name: "Identity Management", path: "/identity-management" }

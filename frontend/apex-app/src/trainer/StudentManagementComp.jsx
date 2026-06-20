@@ -16,9 +16,10 @@ const StudentManagementComp = ({ trainerId }) => {
 
   const fetchBatches = async () => {
     try {
-      const res = await apiClient.get(`/api/lms/trainer/${trainerId}/batches`);
+      const res = await apiClient.get(`/api/batches`);
       if (res.data.success) {
-        setBatches(res.data.data);
+        const all = res.data.data || [];
+        setBatches(all.filter((b) => String(b.trainer_id) === String(trainerId)));
       }
     } catch (err) {
       console.error("Error fetching batches:", err);

@@ -148,7 +148,7 @@ initializeTable().catch((err) => {
 router.get("/users", async (req, res) => {
   try {
     const [users] = await db.query(
-      "SELECT id, name, email FROM registered_users ORDER BY name ASC"
+      "SELECT id, full_name AS name, email FROM student_enquiry ORDER BY full_name ASC"
     );
 
     res.json({
@@ -230,12 +230,26 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const [users] = await db.query(
-      "SELECT id, name, email FROM registered_users WHERE id = ?",
-      [userId]
-    );
+    console.log('[email-creation] POST lookup userId:', userId, 'type:', typeof userId);
 
-    if (!users.length) {
+    // Prefer numeric id lookup, but support fallback when frontend accidentally sends a name.
+    let users;
+    const parsedId = Number(userId);
+    if (!Number.isNaN(parsedId) && String(parsedId) === String(userId)) {
+      [users] = await db.query(
+        "SELECT id, full_name AS name, email FROM student_enquiry WHERE id = ?",
+        [parsedId]
+      );
+    } else {
+      // attempt to lookup by exact full_name match
+      [users] = await db.query(
+        "SELECT id, full_name AS name, email FROM student_enquiry WHERE full_name = ? LIMIT 1",
+        [userId]
+      );
+    }
+
+    if (!users || users.length === 0) {
+      console.warn('[email-creation] user lookup failed for:', userId);
       return res.status(404).json({
         success: false,
         message: "Registered user not found",

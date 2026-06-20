@@ -1,152 +1,137 @@
-/* User Enquiries Section */
-.dashboard-content {
-  padding: 20px;
-  width: 100%;
-  overflow-x: auto;
-}
+/* ==========================
+   USER ENQUIRIES
+========================== */
 
 .dashboard-content h2 {
+  text-align: center;
   margin-bottom: 20px;
-  color: #1e293b;
+  color: #0f172a;
+  font-size: 28px;
 }
 
 /* Filters */
+
 .report-filters {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
-.report-filters input {
-  padding: 8px 12px;
+.report-filters input,
+.report-filters select {
+  padding: 10px 12px;
   border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  min-width: 160px;
+  border-radius: 8px;
+  font-size: 14px;
+  min-width: 180px;
+  outline: none;
+}
+
+.report-filters input:focus,
+.report-filters select:focus {
+  border-color: #2563eb;
 }
 
 .report-filters button {
-  padding: 8px 14px;
+  padding: 10px 16px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   background: #2563eb;
   color: white;
   cursor: pointer;
-  font-weight: 500;
+  transition: 0.3s;
 }
 
 .report-filters button:hover {
   background: #1d4ed8;
 }
 
-/* Table Wrapper */
+/* Table */
+
 .table-container {
   width: 100%;
   overflow-x: auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
-/* Table */
-.dashboard-content table {
+.table-container table {
   width: 100%;
-  min-width: 900px;
   border-collapse: collapse;
-  background: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  min-width: 1000px;
 }
 
-.dashboard-content th {
+.table-container th {
   background: #0f172a;
   color: white;
   padding: 12px;
-  text-align: left;
-  white-space: nowrap;
+  text-align: center;
 }
 
-.dashboard-content td {
-  padding: 10px;
-  border-bottom: 1px solid #e2e8f0;
+.table-container td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.dashboard-content tr:hover {
+.table-container tr:hover {
   background: #f8fafc;
 }
 
-/* Input Fields */
-.dashboard-content td input {
+/* Inputs inside Edit Mode */
+
+.table-container td input {
   width: 100%;
-  min-width: 120px;
-  padding: 6px 8px;
+  padding: 8px;
   border: 1px solid #cbd5e1;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 /* Action Buttons */
-.dashboard-content td button {
-  margin: 2px;
-  padding: 6px 10px;
+
+.table-container button {
+  margin: 3px;
+  padding: 8px 14px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-}
-
-.dashboard-content td button:first-child {
-  background: #16a34a;
   color: white;
 }
 
-.dashboard-content td button:last-child {
+.table-container button:first-child {
+  background: #2563eb;
+}
+
+.table-container button:nth-child(2) {
   background: #dc2626;
-  color: white;
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .dashboard-content {
-    padding: 10px;
-  }
-
-  .report-filters {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .report-filters input,
-  .report-filters button {
-    width: 100%;
-  }
-
-  .dashboard-content table {
-    font-size: 13px;
-  }
-
-  .dashboard-content th,
-  .dashboard-content td {
-    padding: 8px;
-  }
+.table-container button:hover {
+  opacity: 0.9;
 }
+
+/* Pagination */
 
 .pagination-container {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 15px;
-  margin-top: 20px;
+  margin: 25px 0;
   flex-wrap: wrap;
 }
 
 .pagination-container button {
   background: #2563eb;
-  color: #fff;
+  color: white;
   border: none;
-  padding: 8px 10px;
-  border-radius: 6px;
+  padding: 10px 18px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
-}
-
-.pagination-container button:hover {
-  background: #1d4ed8;
 }
 
 .pagination-container button:disabled {
@@ -156,4 +141,67 @@
 
 .pagination-container span {
   font-weight: 600;
+  color: #334155;
+}
+
+/* ==========================
+   TABLET
+========================== */
+
+@media (max-width: 768px) {
+
+  .dashboard-content h2 {
+    font-size: 22px;
+  }
+
+  .report-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .report-filters input,
+  .report-filters select,
+  .report-filters button {
+    width: 100%;
+  }
+
+  .pagination-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media (max-width: 480px) {
+
+  .dashboard-content {
+    padding: 10px;
+  }
+
+  .dashboard-content h2 {
+    font-size: 20px;
+  }
+
+  .table-container table {
+    min-width: 900px;
+  }
+
+  .table-container th,
+  .table-container td {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .table-container button {
+    width: 100%;
+    margin: 2px 0;
+  }
+
+  .pagination-container span {
+    text-align: center;
+    font-size: 14px;
+  }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "../apiClient";
 import "./DashboardComp.css";
-import "./CreateBatches.css";
+import "./ManageStudentsComp.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
@@ -11,18 +11,44 @@ const ManageStudentsComp = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [enquiries, setEnquiries] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [jobTypeFilter, setJobTypeFilter] = useState('');
+  const [totalCount, setTotalCount] = useState(0);
+
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Reset page to 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, jobTypeFilter, selectedDate]);
 
   useEffect(() => {
     fetchEnquiries();
-  }, []);
+  }, [searchTerm, currentPage, jobTypeFilter, selectedDate]);
+
+  const recordsPerPage = 10;
 
   const fetchEnquiries = async () => {
     try {
-      const response = await apiClient.get("/api/userrequests");
+      const params = {
+        q: searchTerm || undefined,
+        page: currentPage,
+        perPage: recordsPerPage,
+      };
 
-      setEnquiries(response.data.data);
+      if (jobTypeFilter) params.job_type = jobTypeFilter;
+      if (selectedDate) params.createdAt = selectedDate;
+
+      const response = await apiClient.get("/api/student-enquiry", { params });
+
+      // response: { success, data, page, perPage, total }
+      const payload = response.data || {};
+      setEnquiries(payload.data || []);
+      setTotalCount(payload.total || 0);
     } catch (error) {
-      console.error("Error fetching enquiries:", error);
+      console.error("Error fetching enquiries:", error, error.response && error.response.data ? error.response.data : null);
     }
   };
 
@@ -33,17 +59,15 @@ const [editForm, setEditForm] = useState({
   full_name: "",
   phone: "",
   email: "",
+  job_type: "",
   career_option: "",
 });
-
-const [selectedDate, setSelectedDate] = useState("");
-const [selectedMonth, setSelectedMonth] = useState("");
 
 {/*Delete user request from RDS and send updated data to frontend*/}
 const deleteEnquiry = async (id) => {
   if (!window.confirm("Delete this record?")) return;
 
-  await apiClient.delete(`/api/userrequests/${id}`);
+  await apiClient.delete(`/api/student-enquiry/${id}`);
 
   fetchEnquiries();
 };
@@ -56,6 +80,7 @@ const editEnquiry = (item) => {
     full_name: item.full_name,
     phone: item.phone,
     email: item.email,
+    job_type: item.job_type,
     career_option: item.career_option,
   });
 };
@@ -63,7 +88,7 @@ const editEnquiry = (item) => {
 {/*Update user request in RDS and send updated data to frontend*/}
 const updateEnquiry = async () => {
   await apiClient.put(
-    `/api/userrequests/${editingId}`,
+    `/api/student-enquiry/${editingId}`,
     editForm
   );
 
@@ -105,7 +130,7 @@ const exportExcel = (data, fileName) => {
 {/*Datewise filter or download*/}
 const downloadByDate = async () => {
   const res = await apiClient.get(
-    `/api/userrequests/date/${selectedDate}`
+    `/api/student-enquiry/date/${selectedDate}`
   );
 
   exportExcel(
@@ -117,7 +142,7 @@ const downloadByDate = async () => {
 {/*Monthwise filter or download*/}
 const downloadByMonth = async () => {
   const res = await apiClient.get(
-    `/api/userrequests/month/${selectedMonth}`
+    `/api/student-enquiry/month/${selectedMonth}`
   );
 
   exportExcel(
@@ -127,37 +152,20 @@ const downloadByMonth = async () => {
 };
 
 {/*Pagination*/}
-const [currentPage, setCurrentPage] = useState(1);
-const recordsPerPage = 10;
-// Pagination Logic
-const indexOfLastRecord = currentPage * recordsPerPage;
-const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-
-const currentRecords = enquiries.slice(
-  indexOfFirstRecord,
-  indexOfLastRecord
-);
-
-const totalPages = Math.ceil(
-  enquiries.length / recordsPerPage
-);
+const totalPages = Math.max(1, Math.ceil(totalCount / recordsPerPage));
 
 const nextPage = () => {
-  if (currentPage < totalPages) {
-    setCurrentPage(currentPage + 1);
-  }
+  if (currentPage < totalPages) setCurrentPage(currentPage + 1);
 };
 
 const prevPage = () => {
-  if (currentPage > 1) {
-    setCurrentPage(currentPage - 1);
-  }
+  if (currentPage > 1) setCurrentPage(currentPage - 1);
 };
 
 {/*sidebar menu items*/}
   const menuItems = [
     { name: "Dashboard", path: "/dashboard" },
-    { name: "Manage Users", path: "/manage-users" },
+    { name: "Manage Companies", path: "/manage-companies" },
     { name: "Manage Students", path: "/manage-students" },
     { name: "Manage Customers", path: "/manage-customers" },
     { name: "Create New Batches", path: "/create-batches" },
@@ -166,8 +174,6 @@ const prevPage = () => {
     { name: "Manage Trainers", path: "/manage-trainers" },
     { name: "Placement Drives", path: "/placement-drives" },
     { name: "View Reports", path: "/view-reports" },
-    { name: "Settings", path: "/settings" },
-    { name: "Audit Logs", path: "/audit-logs" },
     { name: "Notifications", path: "/notifications" },
     { name: "Email Creation", path: "/email-creation" },
     { name: "Identity Management", path: "/identity-management" },
@@ -219,9 +225,21 @@ const prevPage = () => {
                       {/* Content */}
 <main className="dashboard-content">
   <div>
-    <h2>User Enquiries</h2>
+    <h2>Student Enquiries</h2>
 
     <div className="report-filters">
+      <input
+        type="text"
+        placeholder="Search name, email, phone, job type or career..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        style={{ padding: '6px', marginRight: 8, minWidth: 260 }}
+      />
+        <select value={jobTypeFilter} onChange={(e) => setJobTypeFilter(e.target.value)} style={{ padding: '6px', marginRight: 8 }}>
+          <option value="">All Job Types</option>
+          <option value="IT">IT</option>
+          <option value="Non-IT">Non-IT</option>
+        </select>
       <input
         type="date"
         value={selectedDate}
@@ -251,6 +269,7 @@ const prevPage = () => {
             <th>Full Name</th>
             <th>Phone</th>
             <th>Email</th>
+            <th>Job Type</th>
             <th>Career Option</th>
             <th>Created At</th>
             <th>Actions</th>
@@ -258,8 +277,8 @@ const prevPage = () => {
         </thead>
 
         <tbody>
-          {currentRecords.length > 0 ? (
-            currentRecords.map((item) => (
+          {enquiries.length > 0 ? (
+            enquiries.map((item) => (
               <tr key={item.id}>
                 <td>{item.id}</td>
 
@@ -308,6 +327,22 @@ const prevPage = () => {
                     />
                   ) : (
                     item.email
+                  )}
+                </td>
+
+                <td>
+                  {editingId === item.id ? (
+                    <input
+                      value={editForm.job_type}
+                      onChange={(e) =>
+                        setEditForm({
+                          ...editForm,
+                          job_type: e.target.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    item.job_type
                   )}
                 </td>
 
@@ -363,10 +398,10 @@ const prevPage = () => {
                   )}
                 </td>
               </tr>
-            ))
+              ))
           ) : (
             <tr>
-              <td colSpan="7">No data found</td>
+              <td colSpan="8">No data found</td>
             </tr>
           )}
         </tbody>
@@ -385,7 +420,7 @@ const prevPage = () => {
   </button>
 
   <span>
-    Page {currentPage} of {totalPages}
+    Page {currentPage} of {totalPages} ({enquiries.length} records shown, {totalCount} total)
   </span>
 
   <button

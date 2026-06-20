@@ -2,15 +2,19 @@ const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
 
-router.get("/", async (req, res) => {
-  const [rows] = await db.query(
-    "SELECT * FROM trainers ORDER BY created_at DESC"
-  );
+console.log('Loaded trainers route');
 
-  res.json({
-    success: true,
-    data: rows,
-  });
+router.get("/", async (req, res) => {
+  try {
+    const [rows] = await db.query(
+      "SELECT * FROM trainers ORDER BY created_at DESC"
+    );
+
+    return res.json({ success: true, data: rows });
+  } catch (err) {
+    console.error('Error in GET /api/trainers:', err && err.stack ? err.stack : err);
+    return res.status(500).json({ success: false, message: 'Error fetching trainers', error: err?.message });
+  }
 });
 
 router.post("/", async (req, res) => {

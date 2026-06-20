@@ -13,6 +13,21 @@ const ROLE_MAP = {
   placement: "po",
 };
 
+function getNormalizedRole(rawRole, email, userName) {
+  const r = (rawRole || "").toString().toLowerCase();
+  if (ROLE_MAP[r]) return ROLE_MAP[r];
+  if (r.includes("placement")) return "po";
+
+  const lcEmail = (email || "").toString().toLowerCase();
+  const local = lcEmail.split("@")[0] || "";
+  if (local.includes("po") || local.includes("placement")) return "po";
+
+  const uname = (userName || "").toString().toLowerCase();
+  if (uname.includes("placement") || uname.includes("placement officer")) return "po";
+
+  return ROLE_MAP[r] || rawRole;
+}
+
 // Debug endpoint to inspect which DB rows the server can see for an email
 router.get('/debug/registered', async (req, res) => {
   const email = req.query.email;
@@ -66,9 +81,10 @@ router.post("/", async (req, res) => {
         });
       }
 
-      // Normalize role values to the short codes used by the frontend
-      const rawRole = (entry.role || "").toString().toLowerCase();
-      const normalizedRole = ROLE_MAP[rawRole] || entry.role;
+      // Normalize role values to the short codes used by the frontend.
+      // Be forgiving: if backend stores variants like 'placementofficer' or 'placement officer'
+      // map them to 'po' so frontend routing is consistent.
+      const normalizedRole = getNormalizedRole(entry.role, entry.email, entry.user_name) || entry.role;
 
       return res.json({
         success: true,
@@ -101,6 +117,23 @@ router.post("/", async (req, res) => {
         });
       }
 
+      // Try to infer a more specific role for registered users by
+      // checking any generated_emails row or heuristics on the email/name.
+      let inferredRole = "registered";
+      try {
+        const [grows] = await db.query(
+          "SELECT role FROM generated_emails WHERE email = ? LIMIT 1",
+          [registered.email]
+        );
+        if (grows.length) {
+          inferredRole = getNormalizedRole(grows[0].role, registered.email, registered.name) || "registered";
+        } else {
+          inferredRole = getNormalizedRole("", registered.email, registered.name) || "registered";
+        }
+      } catch (err) {
+        console.error('role inference error', err);
+      }
+
       return res.json({
         success: true,
         message: "Login successful",
@@ -108,7 +141,7 @@ router.post("/", async (req, res) => {
           id: registered.id,
           user_id: registered.id,
           user_name: registered.name,
-          role: "registered",
+          role: inferredRole,
           email: registered.email,
           password_reset_required: false,
           source: "registered_users",

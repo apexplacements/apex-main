@@ -1,6 +1,30 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
+console.log('Loaded trainerRoutes');
+
+// Ensure batches table has expected columns (run-once tolerant)
+const ensureBatchesColumns = async () => {
+  try {
+    await db.query(`ALTER TABLE batches ADD COLUMN batch_name VARCHAR(255)`);
+    console.log('[trainerRoutes] Added missing column batch_name to batches table');
+  } catch (err) {
+    // Ignore if column already exists or other benign errors
+    if (err && err.code) {
+      console.log('[trainerRoutes] ensureBatchesColumns check:', err.code);
+    }
+  }
+};
+
+ensureBatchesColumns().catch((e) => console.warn('ensureBatchesColumns failed:', e && e.message));
+
+// Debug: log incoming requests to this router
+router.use((req, res, next) => {
+  try {
+    console.log(`trainerRoutes: ${req.method} ${req.originalUrl || req.url}`);
+  } catch (e) {}
+  next();
+});
 
 // ============================================
 // TRAINER PROFILE ROUTES
@@ -19,6 +43,7 @@ router.get("/profile/:trainerId", async (req, res) => {
     );
 
     if (!trainer.length) {
+      console.warn(`Trainer profile not found for id=${trainerId}`);
       return res.status(404).json({ success: false, message: "Trainer not found" });
     }
 
@@ -29,23 +54,67 @@ router.get("/profile/:trainerId", async (req, res) => {
   }
 });
 
+// Get trainer by user id (maps application user -> trainer record)
+router.get("/by-user/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const [rows] = await db.query(
+      `SELECT id, user_id, trainer_name, email, mobile, experience_years, 
+              specialization, bio, photo_url, certification, is_active 
+       FROM trainers WHERE user_id = ?`,
+      [userId]
+    );
+
+    if (!rows.length) {
+      console.warn(`Trainer not found for user_id=${userId}`);
+      return res.status(404).json({ success: false, message: "Trainer not found for user" });
+    }
+
+    res.json({ success: true, data: rows[0] });
+  } catch (err) {
+    console.error("Error fetching trainer by user:", err);
+    res.status(500).json({ success: false, message: "Error fetching trainer" });
+  }
+});
+
 // Update trainer profile
 router.put("/profile/:trainerId", async (req, res) => {
   try {
     const { trainerId } = req.params;
+    console.log(`[trainerRoutes] PUT /profile/${trainerId} payload:`, req.body);
     const { trainer_name, mobile, specialization, bio, photo_url, certification } = req.body;
-
-    const [result] = await db.query(
-      `UPDATE trainers SET trainer_name=?, mobile=?, specialization=?, 
-              bio=?, photo_url=?, certification=? WHERE id = ?`,
-      [trainer_name, mobile, specialization, bio, photo_url, certification, trainerId]
+    // First try updating by trainer id
+    const [updateResult] = await db.query(
+      `UPDATE trainers SET trainer_name=?, mobile=?, specialization=?, bio=?, photo_url=?, certification=? WHERE id = ?`,
+      [trainer_name || null, mobile || null, specialization || null, bio || null, photo_url || null, certification || null, trainerId]
     );
 
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ success: false, message: "Trainer not found" });
+    if (updateResult.affectedRows > 0) {
+      return res.json({ success: true, message: "Profile updated successfully" });
     }
 
-    res.json({ success: true, message: "Profile updated successfully" });
+    // If not found by id, attempt to update by user_id (frontend may send application user id)
+    const [updateByUser] = await db.query(
+      `UPDATE trainers SET trainer_name=?, mobile=?, specialization=?, bio=?, photo_url=?, certification=? WHERE user_id = ?`,
+      [trainer_name || null, mobile || null, specialization || null, bio || null, photo_url || null, certification || null, trainerId]
+    );
+
+    if (updateByUser.affectedRows > 0) {
+      return res.json({ success: true, message: "Profile updated successfully (by user mapping)" });
+    }
+
+    // If still not found, create a new trainer record and associate with this user id
+    const [insertResult] = await db.query(
+      `INSERT INTO trainers (user_id, trainer_name, mobile, specialization, bio, photo_url, certification, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, 1)`,
+      [trainerId, trainer_name || null, mobile || null, specialization || null, bio || null, photo_url || null, certification || null]
+    );
+
+    if (insertResult.insertId) {
+      return res.json({ success: true, message: "Trainer profile created successfully", id: insertResult.insertId });
+    }
+
+    res.status(500).json({ success: false, message: "Unable to update or create trainer profile" });
   } catch (err) {
     console.error("Error updating trainer profile:", err);
     res.status(500).json({ success: false, message: "Error updating profile" });
@@ -60,23 +129,30 @@ router.put("/profile/:trainerId", async (req, res) => {
 router.get("/:trainerId/batches", async (req, res) => {
   try {
     const { trainerId } = req.params;
+    console.log(`[trainerRoutes] fetching batches for trainerId=${trainerId}`);
 
     const [batches] = await db.query(
-      `SELECT b.id, b.batch_name, b.course_id, c.course_name, b.start_date, 
-              b.end_date, b.max_students, b.status,
-              COUNT(DISTINCT bs.student_id) as enrolled_students
+      `SELECT b.id,
+              b.batch_name,
+              b.course_id,
+              COALESCE(c.course_name, '') as course_name,
+              b.start_date,
+              b.end_date,
+              NULL as max_students,
+              'Ongoing' as status,
+              COUNT(DISTINCT bs.student_id) as student_count
        FROM batches b
-       JOIN courses c ON b.course_id = c.id
+       LEFT JOIN courses c ON b.course_id = c.id
        LEFT JOIN batch_students bs ON b.id = bs.batch_id
        WHERE b.trainer_id = ?
        GROUP BY b.id
        ORDER BY b.start_date DESC`,
       [trainerId]
     );
-
+    console.log('[trainerRoutes] fetched batches count=', batches.length);
     res.json({ success: true, data: batches });
   } catch (err) {
-    console.error("Error fetching batches:", err);
+    console.error("Error fetching batches:", err && err.stack ? err.stack : err);
     res.status(500).json({ success: false, message: "Error fetching batches" });
   }
 });
@@ -85,12 +161,12 @@ router.get("/:trainerId/batches", async (req, res) => {
 router.post("/:trainerId/batches", async (req, res) => {
   try {
     const { trainerId } = req.params;
-    const { course_id, batch_name, start_date, end_date, max_students } = req.body;
+    const { course_id, batch_name, start_date, end_date } = req.body;
 
     const [result] = await db.query(
-      `INSERT INTO batches (course_id, trainer_id, batch_name, start_date, end_date, max_students)
-       VALUES (?, ?, ?, ?, ?, ?)`,
-      [course_id, trainerId, batch_name, start_date, end_date, max_students]
+      `INSERT INTO batches (course_id, trainer_id, batch_name, start_date, end_date)
+       VALUES (?, ?, ?, ?, ?)`,
+      [course_id, trainerId, batch_name, start_date, end_date]
     );
 
     res.json({ success: true, message: "Batch created successfully", batchId: result.insertId });
@@ -144,6 +220,60 @@ router.post("/:trainerId/batches/:batchId/students", async (req, res) => {
   } catch (err) {
     console.error("Error adding student:", err);
     res.status(500).json({ success: false, message: "Error adding student" });
+  }
+});
+
+// Debug: show columns for batches table
+router.get("/debug/batches-columns", async (req, res) => {
+  try {
+    const [cols] = await db.query(
+      `SELECT COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_DEFAULT FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'batches' AND TABLE_SCHEMA = DATABASE()`
+    );
+    res.json({ success: true, data: cols });
+  } catch (err) {
+    console.error('Error fetching batches columns:', err);
+    res.status(500).json({ success: false, message: 'Error fetching columns' });
+  }
+});
+
+// Debug: show sample rows from batches
+router.get("/debug/batches-sample", async (req, res) => {
+  try {
+    const [rows] = await db.query(`SELECT * FROM batches LIMIT 10`);
+    res.json({ success: true, data: rows });
+  } catch (err) {
+    console.error('Error fetching sample batches rows:', err);
+    res.status(500).json({ success: false, message: 'Error fetching sample rows' });
+  }
+});
+
+// Debug: try inserting a test batch to reproduce error and return details
+router.post("/debug/batches-insert-test", async (req, res) => {
+  try {
+    const { course_id = 1, trainer_id = 22, batch_name = 'TestRun', start_date = '2026-06-10', end_date = '2026-07-10', max_students = 10 } = req.body || {};
+    const [result] = await db.query(
+      `INSERT INTO batches (course_id, trainer_id, batch_name, start_date, end_date, max_students) VALUES (?, ?, ?, ?, ?, ?)`,
+      [course_id, trainer_id, batch_name, start_date, end_date, max_students]
+    );
+    res.json({ success: true, result });
+  } catch (err) {
+    console.error('Debug insert error:', err);
+    res.status(500).json({ success: false, message: 'Debug insert failed', error: err && err.message, code: err && err.code });
+  }
+});
+
+// Debug: insert using only minimal columns present in table
+router.post("/debug/batches-insert-simple", async (req, res) => {
+  try {
+    const { course_id = 1, trainer_id = 22, batch_name = 'SimpleTest', start_date = '2026-06-10', end_date = '2026-07-10' } = req.body || {};
+    const [result] = await db.query(
+      `INSERT INTO batches (course_id, trainer_id, batch_name, start_date, end_date) VALUES (?, ?, ?, ?, ?)`,
+      [course_id, trainer_id, batch_name, start_date, end_date]
+    );
+    res.json({ success: true, result });
+  } catch (err) {
+    console.error('Debug simple insert error:', err);
+    res.status(500).json({ success: false, message: 'Debug simple insert failed', error: err && err.message, code: err && err.code });
   }
 });
 

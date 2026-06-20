@@ -18,9 +18,8 @@ const IdentityManagementComp = () => {
     fullName: "",
     role: "",
     email: "",
-    batchId: "",
-    course: "",
-    validUpto: "",
+    blood_group: "",
+
   });
   const [photoFile, setPhotoFile] = useState(null);
   const [photoPreview, setPhotoPreview] = useState("");
@@ -84,7 +83,7 @@ const IdentityManagementComp = () => {
     if (selectedRecord) {
       setFormData((prev) => ({
         ...prev,
-        idNo: `APEX10${selectedRecord.id}`,
+        idNo: `APEX00${selectedRecord.id}`,
         fullName: selectedRecord.user_name || "",
         role: selectedRecord.role || "",
         email: selectedRecord.email || "",
@@ -124,9 +123,7 @@ const IdentityManagementComp = () => {
       payload.append("fullName", formData.fullName);
       payload.append("role", formData.role);
       payload.append("email", formData.email);
-      payload.append("batchId", formData.batchId);
-      payload.append("course", formData.course);
-      payload.append("validUpto", formData.validUpto);
+      payload.append("blood_group", formData.blood_group);
       if (photoFile) {
         payload.append("photo", photoFile);
       }
@@ -159,6 +156,8 @@ const IdentityManagementComp = () => {
     const canvas = await html2canvas(element, {
       backgroundColor: null,
       scale: 2,
+      useCORS: true,
+      allowTaint: false,
     });
 
     const imgData = canvas.toDataURL("image/png");
@@ -173,7 +172,7 @@ const IdentityManagementComp = () => {
  /* Sidebar Menu Items */
   const menuItems = [
     { name: "Dashboard", path: "/dashboard" },
-    { name: "Manage Users", path: "/manage-users" },
+    { name: "Manage Companies", path: "/manage-companies" },
     { name: "Manage Students", path: "/manage-students" },
     { name: "Manage Customers", path: "/manage-customers" },
     { name: "Create New Batches", path: "/create-batches" },
@@ -182,8 +181,6 @@ const IdentityManagementComp = () => {
     { name: "Manage Trainers", path: "/manage-trainers" },
     { name: "Placement Drives", path: "/placement-drives" },
     { name: "View Reports", path: "/view-reports" },
-    { name: "Settings", path: "/settings" },
-    { name: "Audit Logs", path: "/audit-logs" },
     { name: "Notifications", path: "/notifications" },
     { name: "Email Creation", path: "/email-creation" },
     { name: "Identity Management", path: "/identity-management" }
@@ -292,24 +289,9 @@ const IdentityManagementComp = () => {
 
         <input
           type="text"
-          name="batchId"
-          placeholder="Batch ID"
-          value={formData.batchId}
-          onChange={handleChange}
-        />
-
-        <input
-          type="text"
-          name="course"
-          placeholder="Course"
-          value={formData.course}
-          onChange={handleChange}
-        />
-
-        <input
-          type="date"
-          name="validUpto"
-          value={formData.validUpto}
+          name="blood_group"
+          placeholder="Blood Group"
+          value={formData.blood_group}
           onChange={handleChange}
         />
 
@@ -321,21 +303,7 @@ const IdentityManagementComp = () => {
           onChange={handlePhotoChange}
         />
 
-        <input
-          type="text"
-          name="expiryMonth"
-          placeholder="Expiry Month"
-          value={expirationMonth}
-          readOnly
-        />
-
-        <input
-          type="text"
-          name="expiryYear"
-          placeholder="Expiry Year"
-          value={expirationYear}
-          readOnly
-        />
+    
 
         <button type="submit" className="save-btn" disabled={loading}>
           {loading ? "Saving..." : "Save Identity"}
@@ -355,7 +323,7 @@ const IdentityManagementComp = () => {
       >
         <div className="card-header">
           <div className="card-header-top">
-            <img src="/apex-logo.png" alt="Apex Logo" className="id-logo" />
+            <img src="/ImageBox/apex-logo.jpeg" alt="Apex Logo" className="id-logo" crossOrigin="anonymous" referrerPolicy="no-referrer" />
             <div className="card-header-title">
               <h3>Apex Skills & Placement Center</h3>
               <p>www.apexplacements.in</p>
@@ -364,72 +332,46 @@ const IdentityManagementComp = () => {
         </div>
 
         <div className="card-body">
-          {photoPreview && (
-            <div className="photo-preview">
-              <img src={photoPreview} alt="Photo Preview" />
+          <div className="id-main">
+            <div className="photo-column">
+              {photoPreview ? (
+                <div className="photo-preview">
+                  <img src={photoPreview} alt="Photo Preview" />
+                </div>
+              ) : (
+                <div className="photo-preview" />
+              )}
             </div>
-          )}
 
-  <div className="card-row">
-    <span className="label">ID No</span>
-    <span className="colon">:</span>
-    <span className="value">{formData.idNo}</span>
-  </div>
+            <div className="info-column">
+              <div className="top-info">
+                <div className="info-line">
+                  <div className="info-label">ID No</div>
+                  <div className="info-value">{formData.idNo || '-'}</div>
+                </div>
+                <div className="info-line">
+                  <div className="info-label">Name</div>
+                  <div className="info-value">{formData.fullName || '-'}</div>
+                </div>
+              </div>
 
-  <div className="card-row">
-    <span className="label">Name</span>
-    <span className="colon">:</span>
-    <span className="value">{formData.fullName}</span>
-  </div>
+              <div className="below-photo-info">
+                <div className="info-line">
+                  <div className="info-label">Email</div>
+                  <div className="info-value">{email || '-'}</div>
+                </div>
+                <div className="info-line">
+                  <div className="info-label">Role</div>
+                  <div className="info-value">{formData.role || '-'}</div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-  <div className="card-row">
-    <span className="label">Email</span>
-    <span className="colon">:</span>
-    <span className="value">{email}</span>
-  </div>
-
-  <div className="card-row">
-    <span className="label">Role</span>
-    <span className="colon">:</span>
-    <span className="value">{formData.role}</span>
-  </div>
-
-  <div className="card-row">
-    <span className="label">Batch ID</span>
-    <span className="colon">:</span>
-    <span className="value">{formData.batchId}</span>
-  </div>
-
-  <div className="card-row">
-    <span className="label">Course</span>
-    <span className="colon">:</span>
-    <span className="value">{formData.course}</span>
-  </div>
-
-  <div className="card-row">
-    <span className="label">Valid Upto</span>
-    <span className="colon">:</span>
-    <span className="value">{formData.validUpto}</span>
-  </div>
-  {expirationMonth && (
-    <div className="card-row">
-      <span className="label">Expiry Month</span>
-      <span className="colon">:</span>
-      <span className="value">{expirationMonth}</span>
-    </div>
-  )}
-  {expirationYear && (
-    <div className="card-row">
-      <span className="label">Expiry Year</span>
-      <span className="colon">:</span>
-      <span className="value">{expirationYear}</span>
-    </div>
-  )}
-
-</div>
-
-        <div className="signature">
-          Authorized Signature
+          <div className="card-footer">
+            <div className="blood-left">Blood Group: <strong>{formData.blood_group || '-'}</strong></div>
+            <div className="signature">Authorized Signature</div>
+          </div>
         </div>
       </div>
 
